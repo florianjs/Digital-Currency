@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <link rel="stylesheet" href="css/output.css" />
+    <title>Tonken</title>
+  </head>
+  <body class="bg-gray-100">
+    <div class="flex flex-col justify-center items-center h-screen">
+      <form
+        class="m-auto max-w-lg sm:w-screen pt-8 pb-5 px-10 flex flex-col bg-white rounded justify-center items-center text-center"
+        action="/"
+        method="post"
+      >
+        <h1 class="mb-4 text-gray-600 font-semibold text-2xl">TONKEN</h1>
+        <input
+          class="border-2  hover:border-teal-300 p-1 m-1 rounded placeholder-gray-400 text-center"
+          type="text"
+          name="email"
+          id=""
+          placeholder="E-Mail"
+        />
+        <input
+          class="border-2 p-1 m-1 rounded hover:border-teal-300 placeholder-gray-400 text-center"
+          type="text"
+          name="password"
+          id=""
+          placeholder="Password"
+        />
+        <button
+          class="px-4 py-2 mt-5 mb-8 text-white font-bold bg-teal-400 rounded hover:bg-teal-500"
+          type="submit"
+        >
+          LOGIN
+        </button>
+      </form>
+      <p class="mb-5">
+        Need an account ?
+        <a class="text-blue-400" href="/subscribe">Subscribe.</a>
+      </p>
+    </div>
+  </body>
+</html>
