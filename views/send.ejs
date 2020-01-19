@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="css/output.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <title>Send Tonkens</title>
+  </head>
+  <body class="bg-gray-300">
+    <%- include("partial/nav") %>
+
+    <div
+      class="card mx-6 flex flex-col my-16 max-w-2xl justify-around sm:mx-auto sm:flex-row  "
+    >
+      <div class="profile-card flex-col bg-white rounded flex-1 shadow mr-2 ">
+        <!--         Amount to Send
+ -->
+        <div class="wallet-amount ">
+          <form
+            action="/send"
+            method="post"
+            class="flex flex-col items-center m-auto w-full"
+          >
+            <input
+              type="text"
+              name="receiver"
+              id=""
+              placeholder="john@example.com"
+              class=" w-64 border-2 border-indigo-200 rounded bg-indigo-100 text-center mt-10 mb-2 h-10 "
+            />
+            <p class=" text-red-500 "><%= error %></p>
+            <input
+              type="number"
+              name="amount"
+              id=""
+              placeholder="EX: 10,00"
+              class=" w-64 border-2 border-indigo-200 rounded bg-indigo-100 text-center mt-2 mb-10 h-10 "
+            />
+            <p class=" text-red-500 "><%= amountError %></p>
+
+            <div class="flex flex-row">
+              <button
+                type="submit"
+                class=" cursor-pointer mx-2 shadow px-4 py-2 mt-5 mb-8 text-white font-bold bg-indigo-500 rounded hover:bg-indigo-600"
+              >
+                CONFIRM
+              </button>
+              <a href="/home">
+                <div
+                  class="cursor-pointer mx-2 shadow px-4 py-2 mt-5 mb-8 text-white font-bold bg-red-500 rounded hover:bg-red-600"
+                >
+                  CANCEL
+                </div>
+              </a>
+            </div>
+          </form>
+        </div>
+
+        <!--         End of Amount to Send
+ -->
+      </div>
+    </div>
+  </body>
+</html>

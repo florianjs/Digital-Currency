@@ -8,7 +8,56 @@
     <link rel="stylesheet" href="css/output.css" />
     <title>Document</title>
   </head>
-  <body>
+  <body class="bg-gray-300 ">
+    <!--     NAV BAR  
+    -->
+
+    <%- include("partial/nav") %>
+
+    <!--     END OF NAV BAR
+ -->
+    <div
+      class="card mx-6 flex flex-col my-16 max-w-4xl justify-around lg:mx-auto sm:flex-row  "
+    >
+      <div class="profile-card flex-col bg-white rounded flex-1 shadow mr-2 ">
+        <div class="profile-picture my-2">
+          <img
+            src="<%= defaultPicture %>"
+            alt=""
+            class="rounded-full h-24 w-24 mx-auto border-2 border-indigo-400"
+          />
+        </div>
+        <div class="wallet-amount">
+          <h1 class=" text-3xl text-indigo-500 text-center">
+            <%= tokens %> TKN
+          </h1>
+        </div>
+
+        <div class="buttons-wallet flex justify-center my-4">
+          <a href="/send">
+            <div
+              class=" cursor-pointer mx-2 shadow px-4 py-2 mt-5 mb-8 text-white font-bold bg-indigo-500 rounded hover:bg-indigo-600"
+            >
+              SEND
+            </div>
+          </a>
+          <a href="/claim">
+            <div
+              class="cursor-pointer mx-2 shadow px-4 py-2 mt-5 mb-8 text-white font-bold bg-indigo-500 rounded hover:bg-indigo-600"
+            >
+              CLAIM
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- HISTORY -->
+
+      <div class="history-card flex-1 bg-gray-200 rounded p-2">
+        <h1 class="text-center font-bold">History</h1>
+      </div>
+    </div>
+
     <h1 class="text-blue-800">Hello, Florian</h1>
   </body>
 </html>
