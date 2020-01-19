@@ -85,7 +85,8 @@ app.route("/home").get(function(req, res) {
   if (req.isAuthenticated()) {
     res.render("home", {
       defaultPicture: defaultPicture,
-      tokens: req.user.tokens
+      tokens: req.user.tokens,
+      username: req.user.username
     });
   }
 });

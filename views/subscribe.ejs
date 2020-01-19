@@ -7,6 +7,18 @@
 
     <link rel="stylesheet" href="css/output.css" />
     <title>Tonken</title>
+
+    <script type="text/javascript">
+      function blockSpecialChar(e) {
+        var k = e.keyCode;
+        return (
+          (k > 64 && k < 91) ||
+          (k > 96 && k < 123) ||
+          k == 8 ||
+          (k >= 48 && k <= 57)
+        );
+      }
+    </script>
   </head>
   <body class="bg-gray-100">
     <div class="flex flex-col justify-center items-center h-screen">
@@ -22,6 +34,7 @@
           name="username"
           id=""
           placeholder="Username"
+          onkeypress="return blockSpecialChar(event)"
         />
         <input
           class="border-2  hover:border-indigo-300 p-1 m-1 rounded placeholder-gray-400 text-center"
