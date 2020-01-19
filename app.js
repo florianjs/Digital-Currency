@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -19,7 +21,7 @@ app.use(express.static("public"));
 
 app.use(
   session({
-    secret: "keyboard cat",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false
   })
