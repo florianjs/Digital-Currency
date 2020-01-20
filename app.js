@@ -270,12 +270,6 @@ app.route("/admin").get(function(req, res) {
   });
 });
 
-/* app.route("/admin/user").post(function(req, res) {
-  console.log(req.body.user);
-
-  res.redirect("/admin/edit/:user");
-}); */
-
 app
   .route("/admin/edit/:user")
   .get(function(req, res) {
@@ -321,6 +315,43 @@ app
       }
       res.redirect("/admin");
     });
+  });
+
+app
+  .route("/admin/new")
+  .get(function(req, res) {
+    res.render("create-user");
+  })
+  .post(function(req, res) {
+    if (req.body.isAdmin === "on") {
+      User.register(
+        {
+          username: req.body.newName,
+          email: req.body.newEmail,
+          tokens: req.body.newTokens,
+          admin: true
+        },
+        req.body.password,
+        function(err, res) {
+          res.redirect("/admin");
+        }
+      );
+      res.redirect("/admin");
+    } else {
+      User.register(
+        {
+          username: req.body.newName,
+          email: req.body.newEmail,
+          tokens: req.body.newTokens,
+          admin: false
+        },
+        req.body.password,
+        function(err, res) {
+          res.redirect("/admin");
+        }
+      );
+      res.redirect("/admin");
+    }
   });
 
 app.listen("3000", function() {

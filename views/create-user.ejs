@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <base href="/" />
+    <link rel="stylesheet" href="css/output.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <title>Admin Panel</title>
+  </head>
+  <body class="bg-gray-200 ">
+    <div class="col flex flex-col m-auto w-56">
+      <h1 class="text-indigo-500 text-center text-4xl">Create a new User</h1>
+
+      <form action="/admin/new/" method="post" class="flex flex-col">
+        <input
+          type="text"
+          name="newName"
+          id=""
+          placeholder="Username"
+          class="rounded m-2 p-2 text-center"
+        />
+        <input
+          type="password"
+          name="password"
+          id=""
+          placeholder="Password"
+          class="rounded m-2 p-2 text-center"
+        />
+        <input
+          type="email"
+          name="newEmail"
+          id=""
+          placeholder="Email"
+          class="rounded m-2 p-2 text-center"
+        />
+        <input
+          type="number"
+          name="newTokens"
+          id=""
+          placeholder="Total Token Amount"
+          class="rounded m-2 p-2 text-center"
+        />
+        <label for="isAdmin" class=" uppercase font-black text-red-500 "
+          >Is Admin? <input type="checkbox" name="isAdmin" id="isAdmin"
+        /></label>
+        <button
+          type="submit"
+          class=" cursor-pointer text-center mx-2 shadow px-4 py-2 mt-5 mb-2 text-white font-bold bg-indigo-500 rounded hover:bg-indigo-600"
+        >
+          CONFIRM
+        </button>
+        <a
+          href="/admin"
+          class="cursor-pointer text-center mx-2 shadow px-4 py-2 mt-2 mb-8 text-white font-bold bg-red-500 rounded hover:bg-red-600"
+          >CANCEL</a
+        >
+      </form>
+    </div>
+  </body>
+</html>
