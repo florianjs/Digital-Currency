@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="css/output.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <title>Admin Panel</title>
+  </head>
+  <body class="bg-gray-200">
+    <h1>Hello Admin, welcome to your Dashboard</h1>
+    <div class="table flex flex-row w-screen ">
+      <% usersDB.forEach(function(user){ %>
+      <div class="col flex justify-center">
+        <p class="p-2 bg-white w-32 border-b-2 border-indigo-500 overflow-y-auto"><%= user.username %></p>
+        <p class="p-2 bg-white w-56 border-b-2 border-indigo-500 overflow-y-auto"><%= user.email %></p class="p-2">
+        <p class="p-2 bg-white w-32 border-b-2 border-indigo-500 overflow-y-auto"><%= user.tokens %><%= tokenSymbol %></p class="p-2">
+        
+            <% if(user.admin){ %>
+                <p class="p-2 w-32 bg-white text-red-500 border-indigo-500 font-bold w-32 border-b-2 overflow-y-auto">Admin
+
+                <% } else { %>
+                    <p class=" p-2 bg-white w-32 border-indigo-500 border-b-2 overflow-y-auto">User
+                    <% } %>
+                </p>
+                
+                <div class="edit p-2 bg-white w-56 border-b-2 border-indigo-500 overflow-y-auto">
+                    <a href="/admin/edit/<%= user.username %>" class="w-32 shadow p-2 bg-indigo-500 text-center rounded m-2 justify-center  w-32 border-b-2 border-indigo-500 overflow-y-auto text-white font-bold hidden hover:bg-indigo-400 lg:flex">
+                        EDIT
+                    </a> 
+                </div>
+      </div>
+      <% }) %>
+    </div>
+  </body>
+</html>

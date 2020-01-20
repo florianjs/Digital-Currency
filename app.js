@@ -8,7 +8,8 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const findOrCreate = require("mongoose-findorcreate");
 
-const defaultPicture = "img/profil.jpg";
+/* TODO: Deleting profile picture? const defaultPicture = "img/profil.jpg";
+ */
 
 /* DEFAULT AMOUNT OF TOKENS WHEN A USER REGISTER. 
 Recommended : 0
@@ -23,6 +24,13 @@ Default symbol TKN
 
 const nameOfYourToken = "Tonken";
 const tokenSymbol = "TKN";
+
+/* NAME YOUR DATABASE
+Default URL (for testing): mongodb://localhost:27017/
+default Database Name: tonkenDB */
+
+const nameDB = "tonkenDB";
+const urlDB = "mongodb://localhost:27017/";
 
 const app = express();
 
@@ -45,7 +53,7 @@ app.use(passport.session());
 /* Default URL for test environment : Localhost
  */
 
-mongoose.connect("mongodb://localhost:27017/tonkenDB", {
+mongoose.connect(urlDB + nameDB, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
@@ -56,7 +64,8 @@ const userSchema = new mongoose.Schema({
   username: String,
   email: String,
   password: String,
-  tokens: Number
+  tokens: Number,
+  admin: Boolean
 });
 
 const historySchema = new mongoose.Schema({
@@ -118,10 +127,10 @@ app.route("/home").get(function(req, res) {
         ]
       },
       function(err, founded) {
-        console.log(founded);
         res.render("home", {
-          defaultPicture: defaultPicture,
-          tokens: req.user.tokens,
+          /* TODO Picture or not picture? That is the question. */
+          /*           defaultPicture: defaultPicture,
+           */ tokens: req.user.tokens,
           username: req.user.username,
           history: founded,
           user: req.user.username,
@@ -143,7 +152,8 @@ app
       {
         username: req.body.username,
         email: req.body.email,
-        tokens: defaultTokens
+        tokens: defaultTokens,
+        admin: false
       },
       req.body.password,
       function(err, user) {
@@ -181,14 +191,18 @@ app
           if (err) {
             res.render("send", {
               error: "User doesn't exist",
-              amountError: ""
+              amountError: "",
+              tokenName: nameOfYourToken,
+              tokenSymbol: tokenSymbol
             });
           }
           if (founded) {
             const history = new TokenMovement({
               fromUsername: req.user.username,
               toUsername: req.body.receiver,
-              amount: req.body.amount
+              amount: req.body.amount,
+              tokenName: nameOfYourToken,
+              tokenSymbol: tokenSymbol
             });
 
             User.findOneAndUpdate(
@@ -209,7 +223,9 @@ app
             console.log("Username doesn't exist");
             res.render("send", {
               error: "User doesn't exist",
-              amountError: ""
+              amountError: "",
+              tokenName: nameOfYourToken,
+              tokenSymbol: tokenSymbol
             });
           }
         }
@@ -217,9 +233,67 @@ app
     } else {
       res.render("send", {
         error: "",
-        amountError: "You don't have enought tokens"
+        amountError: "You don't have enought tokens",
+        tokenName: nameOfYourToken,
+        tokenSymbol: tokenSymbol
       });
     }
+  });
+
+app.route("/admin").get(function(req, res) {
+  User.findOne({ admin: true, username: req.user.username }, function(
+    err,
+    founded
+  ) {
+    if (req.isAuthenticated() && founded) {
+      User.find({}, function(err, users) {
+        res.render("admin", {
+          usersDB: users,
+          tokenSymbol: tokenSymbol,
+          nameOfYourToken: nameOfYourToken
+        });
+      });
+    } else {
+      res.sendStatus(404);
+    }
+  });
+});
+
+/* app.route("/admin/user").post(function(req, res) {
+  console.log(req.body.user);
+
+  res.redirect("/admin/edit/:user");
+}); */
+
+app
+  .route("/admin/edit/:user")
+  .get(function(req, res) {
+    let editUsername = req.params.user;
+    User.findOne({ username: editUsername }, function(err, founded) {
+      if (founded) {
+        res.render("edit-user", { username: editUsername });
+      }
+    });
+  })
+  .post(function(req, res) {
+    console.log(req.body.newName);
+    console.log(req.body.newEmail);
+    console.log(req.body.newTokens);
+    User.findOne({ username: req.params.user }, function(err, founded) {
+      if (req.body.newName.length != 0) {
+        founded.username = req.body.newName;
+        founded.save();
+      }
+      if (req.body.newEmail.length != 0) {
+        founded.email = req.body.newEmail;
+        founded.save();
+      }
+      if (req.body.newTokens > 0) {
+        founded.tokens = req.body.newTokens;
+        founded.save();
+      }
+      res.redirect("/admin");
+    });
   });
 
 app.listen("3000", function() {
