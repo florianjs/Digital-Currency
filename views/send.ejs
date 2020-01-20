@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="css/output.css" />
     <link rel="stylesheet" href="css/styles.css" />
 
-    <title>Send Tonkens</title>
+    <title>Send <%= tokenName %>s</title>
   </head>
-  <body class="bg-gray-300">
+  <body class="bg-gray-200">
     <%- include("partial/nav") %>
 
     <div
@@ -24,22 +24,33 @@
             method="post"
             class="flex flex-col items-center m-auto w-full"
           >
-            <input
-              type="text"
-              name="receiver"
-              id=""
-              placeholder="john@example.com"
-              class=" w-64 border-2 border-indigo-200 rounded bg-indigo-100 text-center mt-10 mb-2 h-10 "
-            />
+            <div class="item flex flex-col">
+              <label for="username" class=" font-bold mt-10 mb-2 text-gray-700"
+                >To
+              </label>
+              <input
+                type="text"
+                name="receiver"
+                id="username"
+                placeholder="Username"
+                class="bg-gray-200 w-64  rounded text-center  mb-2 h-10 "
+              />
+            </div>
+
             <p class=" text-red-500 "><%= error %></p>
-            <input
-              type="number"
-              name="amount"
-              id=""
-              placeholder="EX: 10,00"
-              class=" w-64 border-2 border-indigo-200 rounded bg-indigo-100 text-center mt-2 mb-10 h-10 "
-            />
-            <p class=" text-red-500 "><%= amountError %></p>
+
+            <div class="item flex flex-col">
+              <label for="" class=" font-bold text-gray-700 mt-2">Amount</label>
+              <input
+                type="number"
+                name="amount"
+                id=""
+                placeholder="100"
+                class="bg-gray-200 w-64 border rounded  text-center mt-2 mb-2 h-10 "
+              />
+            </div>
+
+            <p class=" mb-5 text-red-500 "><%= amountError %></p>
 
             <div class="flex flex-row">
               <button

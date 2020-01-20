@@ -10,19 +10,9 @@ const findOrCreate = require("mongoose-findorcreate");
 
 const defaultPicture = "img/profil.jpg";
 
-/* DEFAULT AMOUNT OF TOKENS WHEN A USER REGISTER. 
-Recommended : 0
-Default value: 50
+/* DEFAULT AMOUNT OF TOKENS WHEN A USER REGISTER
  */
 const defaultTokens = 50;
-
-/* NAME YOUR TOKEN.
-Default name: Tonken 
-Default symbol TKN
- */
-
-const nameOfYourToken = "Tonken";
-const tokenSymbol = "TKN";
 
 const app = express();
 
@@ -42,9 +32,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-/* Default URL for test environment : Localhost
- */
-
 mongoose.connect("mongodb://localhost:27017/tonkenDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -59,17 +46,10 @@ const userSchema = new mongoose.Schema({
   tokens: Number
 });
 
-const historySchema = new mongoose.Schema({
-  fromUsername: String,
-  toUsername: String,
-  amount: Number
-});
-
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
 
 const User = mongoose.model("User", userSchema);
-const TokenMovement = mongoose.model("TokenMovement", historySchema);
 
 passport.use(User.createStrategy());
 
@@ -86,12 +66,8 @@ passport.deserializeUser(function(id, done) {
 app
   .route("/")
   .get(function(req, res) {
-    if (req.isAuthenticated()) {
-      res.redirect("/home");
-    } else {
-      res.render("login");
-      res.end();
-    }
+    res.render("login");
+    res.end();
   })
   .post(
     passport.authenticate("local", {
@@ -110,26 +86,11 @@ app.get("/logout", function(req, res) {
 
 app.route("/home").get(function(req, res) {
   if (req.isAuthenticated()) {
-    TokenMovement.find(
-      {
-        $or: [
-          { fromUsername: req.user.username },
-          { toUsername: req.user.username }
-        ]
-      },
-      function(err, founded) {
-        console.log(founded);
-        res.render("home", {
-          defaultPicture: defaultPicture,
-          tokens: req.user.tokens,
-          username: req.user.username,
-          history: founded,
-          user: req.user.username,
-          tokenName: nameOfYourToken,
-          tokenSymbol: tokenSymbol
-        });
-      }
-    );
+    res.render("home", {
+      defaultPicture: defaultPicture,
+      tokens: req.user.tokens,
+      username: req.user.username
+    });
   }
 });
 
@@ -162,12 +123,7 @@ app
 app
   .route("/send")
   .get(function(req, res) {
-    res.render("send", {
-      error: " ",
-      amountError: "",
-      tokenName: nameOfYourToken,
-      tokenSymbol: tokenSymbol
-    });
+    res.render("send", { error: " ", amountError: "" });
   })
   .post(function(req, res) {
     if (
@@ -185,12 +141,6 @@ app
             });
           }
           if (founded) {
-            const history = new TokenMovement({
-              fromUsername: req.user.username,
-              toUsername: req.body.receiver,
-              amount: req.body.amount
-            });
-
             User.findOneAndUpdate(
               { username: req.user.username },
               {
@@ -200,7 +150,6 @@ app
               },
               function(err, founded) {
                 if (founded) {
-                  history.save();
                   res.redirect("/home");
                 }
               }

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/output.css" />
     <title>Document</title>
   </head>
-  <body class="bg-gray-300 ">
+  <body class="bg-gray-200 ">
     <!--     NAV BAR  
     -->
 
@@ -16,20 +16,27 @@
 
     <!--     END OF NAV BAR
  -->
+
+    <h1 class=" text-center text-indigo-500 text-4xl ">
+      Hello, <%= username %>
+    </h1>
+
     <div
-      class="card mx-6 flex flex-col my-16 max-w-4xl justify-around lg:mx-auto sm:flex-row  "
+      class="card  mx-6 flex flex-col my-16 max-w-4xl justify-around lg:mx-auto sm:flex-row  "
     >
-      <div class="profile-card flex-col bg-white rounded flex-1 shadow mr-2 ">
-        <div class="profile-picture my-2">
+      <div
+        class="profile-card flex-col bg-white rounded-lg flex-1 shadow mr-2 "
+      >
+        <!--         <div class="profile-picture my-2 ">
           <img
             src="<%= defaultPicture %>"
             alt=""
-            class="rounded-full h-24 w-24 mx-auto border-2 border-indigo-400"
+            class="rounded-full h-24 w-24 mx-auto  -mt-12 top-0"
           />
-        </div>
+        </div> -->
         <div class="wallet-amount">
-          <h1 class=" text-3xl text-indigo-500 text-center">
-            <%= tokens %> TKN
+          <h1 class=" text-3xl text-indigo-500 text-center mt-12">
+            <%= tokens %> <%= tokenSymbol %>
           </h1>
         </div>
 
@@ -53,11 +60,25 @@
 
       <!-- HISTORY -->
 
-      <div class="history-card flex-1 bg-gray-200 rounded p-2">
-        <h1 class="text-center font-bold">History</h1>
-      </div>
-    </div>
+      <div class="history-card overflow-y-auto flex-1 bg-gray-200 rounded p-2 h-56 ">
+        <% history.reverse() %>
+        <% history.forEach(function(i){ %> <% if(user === i.fromUsername) { %>
+        <p class="mx-2  font-bold text-red-500 bg-gray-300 rounded mb-3 p-2 text-center mt-3 sm:mt-auto">
+          You sent <%= i.amount %>
+          <%= tokenSymbol %>  to <span class="text-gray-800 font-normal "></span><%=
+          i.toUsername %></span>
+        </p>
 
-    <h1 class="text-blue-800">Hello, <%= username %></h1>
+        <% } else { %>
+
+        <p class="mx-2 font-bold text-indigo-500 bg-gray-300 rounded mb-3 p-2 text-center mt-3 sm:mt-auto">
+          <%= i.fromUsername %>
+          sent you <%= i.amount %>
+          <%= tokenSymbol %>
+        </p>
+
+        <% }; }) %>
+      
+    </div>
   </body>
 </html>

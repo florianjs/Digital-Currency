@@ -20,16 +20,18 @@
       }
     </script>
   </head>
-  <body class="bg-gray-100">
+  <body class="bg-gray-200">
     <div class="flex flex-col justify-center items-center h-screen">
       <form
         class="shadow m-auto max-w-lg sm:w-screen pt-8 pb-5 px-10 flex flex-col bg-white rounded justify-center items-center text-center"
         action="/subscribe"
         method="post"
       >
-        <h1 class="mb-4 text-gray-600 font-semibold text-2xl">TONKEN</h1>
+        <h1 class="mb-4 text-gray-600 font-semibold text-2xl text-indigo-500">
+          TONKEN
+        </h1>
         <input
-          class="border-2  hover:border-indigo-300 p-1 m-1 rounded placeholder-gray-400 text-center"
+          class="bg-gray-200 p-1 m-2 rounded placeholder-gray-500 text-center"
           type="text"
           name="username"
           id=""
@@ -37,14 +39,14 @@
           onkeypress="return blockSpecialChar(event)"
         />
         <input
-          class="border-2  hover:border-indigo-300 p-1 m-1 rounded placeholder-gray-400 text-center"
+          class="bg-gray-200 p-1 m-2 rounded placeholder-gray-500 text-center"
           type="text"
           name="email"
           id=""
           placeholder="E-Mail"
         />
         <input
-          class="border-2 p-1 m-1 rounded hover:border-indigo-300 placeholder-gray-400 text-center"
+          class="bg-gray-200 p-1 m-2 rounded placeholder-gray-500 text-center"
           type="password"
           name="password"
           id=""
