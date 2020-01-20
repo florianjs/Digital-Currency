@@ -276,9 +276,7 @@ app
     });
   })
   .post(function(req, res) {
-    console.log(req.body.newName);
-    console.log(req.body.newEmail);
-    console.log(req.body.newTokens);
+    console.log(req.body.delete);
     User.findOne({ username: req.params.user }, function(err, founded) {
       if (req.body.newName.length != 0) {
         founded.username = req.body.newName;
@@ -291,6 +289,24 @@ app
       if (req.body.newTokens > 0) {
         founded.tokens = req.body.newTokens;
         founded.save();
+      }
+      if (req.body.delete === "on") {
+        TokenMovement.deleteMany(
+          {
+            $or: [
+              { fromUsername: founded.username },
+              { toUsername: founded.username }
+            ]
+          },
+          function(err) {
+            if (err) console.log(err);
+            console.log("Successful deleted history");
+          }
+        );
+        User.deleteOne({ username: founded.username }, function(err) {
+          if (err) console.log(err);
+          console.log("Successful deletion");
+        });
       }
       res.redirect("/admin");
     });

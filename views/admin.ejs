@@ -24,12 +24,19 @@
                     <p class=" p-2 bg-white w-32 border-indigo-500 border-b-2 overflow-y-auto">User
                     <% } %>
                 </p>
+
                 
                 <div class="edit p-2 bg-white w-56 border-b-2 border-indigo-500 overflow-y-auto">
-                    <a href="/admin/edit/<%= user.username %>" class="w-32 shadow p-2 bg-indigo-500 text-center rounded m-2 justify-center  w-32 border-b-2 border-indigo-500 overflow-y-auto text-white font-bold hidden hover:bg-indigo-400 lg:flex">
-                        EDIT
-                    </a> 
+                  <% if(user.admin === true) { } else { %>
+
+                    <a href="/admin/edit/<%= user.username %>" class=" w-32 shadow p-2 bg-indigo-500 text-center rounded m-2 justify-center  w-32 border-b-2 border-indigo-500 overflow-y-auto text-white font-bold hidden hover:bg-indigo-400 lg:flex">
+                    EDIT
+                    </a>
+                    <% } %>
                 </div>
+
+
+
       </div>
       <% }) %>
     </div>
