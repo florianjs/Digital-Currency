@@ -25,6 +25,13 @@ Default symbol TKN
 const nameOfYourToken = "Tonken";
 const tokenSymbol = "TKN";
 
+/* Is your website open for public subscribers? 
+true = Yes 
+false = No, only admin can create accounts
+*/
+
+const publicRegister = true;
+
 /* NAME YOUR DATABASE
 Default URL (for testing): mongodb://localhost:27017/
 default Database Name: tonkenDB */
@@ -98,7 +105,7 @@ app
     if (req.isAuthenticated()) {
       res.redirect("/home");
     } else {
-      res.render("login");
+      res.render("login", { register: publicRegister });
       res.end();
     }
   })
@@ -145,7 +152,11 @@ app.route("/home").get(function(req, res) {
 app
   .route("/subscribe")
   .get(function(req, res) {
-    res.render("subscribe");
+    if (publicRegister) {
+      res.render("subscribe");
+    } else {
+      res.redirect("/");
+    }
   })
   .post(function(req, res) {
     User.register(
