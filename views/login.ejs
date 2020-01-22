@@ -16,7 +16,9 @@
           action="/"
           method="post"
         >
-          <h1 class="mb-4 text-gray-600 font-light text-4xl text-indigo-500">
+          <h1
+            class="mb-4 text-gray-600 font-light text-4xl text-<%= colorTheme %>-500"
+          >
             Welcome back
           </h1>
           <input
@@ -48,7 +50,7 @@
         </form>
       </div>
       <div
-        class="about rounded-r-lg shadow text-white hidden bg-indigo-500 shadow max-h-screen my-auto max-w-sm sm:w-screen pt-8 pb-8 px-10  flex-col  lg:flex"
+        class="about rounded-r-lg shadow text-white hidden bg-<%= colorTheme %>-500 shadow max-h-screen my-auto max-w-sm sm:w-screen pt-8 pb-8 px-10  flex-col  lg:flex"
       >
         <h1 class="text-5xl font-bold">About.</h1>
         <p>We are the Tonken company: we have created a new kind of Token.</p>

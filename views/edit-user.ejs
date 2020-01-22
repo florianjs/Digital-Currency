@@ -11,7 +11,9 @@
   </head>
   <body class="bg-gray-200 ">
     <div class="col flex flex-col m-auto w-56">
-      <h1 class="text-indigo-500 text-center text-4xl">Edit <%= username %></h1>
+      <h1 class="text-<%= colorTheme %>-500 text-center text-4xl">
+        Edit <%= username %>
+      </h1>
 
       <form
         action="/admin/edit/<%= username %>"
@@ -44,7 +46,7 @@
         /></label>
         <button
           type="submit"
-          class=" cursor-pointer text-center mx-2 shadow px-4 py-2 mt-5 mb-2 text-white font-bold bg-indigo-500 rounded hover:bg-indigo-600"
+          class=" cursor-pointer text-center mx-2 shadow px-4 py-2 mt-5 mb-2 text-white font-bold bg-<%= colorTheme %>-500 rounded hover:bg-<%= colorTheme %>-600"
         >
           CONFIRM
         </button>

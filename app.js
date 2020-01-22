@@ -11,6 +11,21 @@ const findOrCreate = require("mongoose-findorcreate");
 /* TODO: Deleting profile picture? const defaultPicture = "img/profil.jpg";
  */
 
+/* THEME COLOR 
+Available colors : 
+gray (NOT RECOMMENDED)
+red
+orange
+yellow
+green
+teal
+blue
+indigo (DEFAULT)
+purple
+pink
+*/
+const colorTheme = "indigo";
+
 /* DEFAULT AMOUNT OF TOKENS WHEN A USER REGISTER. 
 Recommended : 0
 Default value: 50
@@ -105,7 +120,7 @@ app
     if (req.isAuthenticated()) {
       res.redirect("/home");
     } else {
-      res.render("login", { register: publicRegister });
+      res.render("login", { register: publicRegister, colorTheme: colorTheme });
       res.end();
     }
   })
@@ -142,7 +157,8 @@ app.route("/home").get(function(req, res) {
           history: founded,
           user: req.user.username,
           tokenName: nameOfYourToken,
-          tokenSymbol: tokenSymbol
+          tokenSymbol: tokenSymbol,
+          colorTheme: colorTheme
         });
       }
     );
@@ -153,7 +169,7 @@ app
   .route("/subscribe")
   .get(function(req, res) {
     if (publicRegister) {
-      res.render("subscribe");
+      res.render("subscribe", { colorTheme: colorTheme });
     } else {
       res.redirect("/");
     }
@@ -187,7 +203,8 @@ app
       error: " ",
       amountError: "",
       tokenName: nameOfYourToken,
-      tokenSymbol: tokenSymbol
+      tokenSymbol: tokenSymbol,
+      colorTheme: colorTheme
     });
   })
   .post(function(req, res) {
@@ -204,7 +221,8 @@ app
               error: "User doesn't exist",
               amountError: "",
               tokenName: nameOfYourToken,
-              tokenSymbol: tokenSymbol
+              tokenSymbol: tokenSymbol,
+              colorTheme: colorTheme
             });
           }
           if (founded) {
@@ -236,7 +254,8 @@ app
               error: "User doesn't exist",
               amountError: "",
               tokenName: nameOfYourToken,
-              tokenSymbol: tokenSymbol
+              tokenSymbol: tokenSymbol,
+              colorTheme: colorTheme
             });
           }
         }
@@ -246,10 +265,20 @@ app
         error: "",
         amountError: "You don't have enought tokens",
         tokenName: nameOfYourToken,
-        tokenSymbol: tokenSymbol
+        tokenSymbol: tokenSymbol,
+        colorTheme: colorTheme
       });
     }
   });
+
+/* Calculte total number of Tokens */
+
+/* User.aggregate({
+  $group: {
+    _id: null,
+    tokens: { $sum: "$user_tokens" }
+  }
+}); */
 
 app.route("/admin").get(function(req, res) {
   User.findOne({ admin: true, username: req.user.username }, function(
@@ -261,7 +290,8 @@ app.route("/admin").get(function(req, res) {
         res.render("admin", {
           usersDB: users,
           tokenSymbol: tokenSymbol,
-          nameOfYourToken: nameOfYourToken
+          nameOfYourToken: nameOfYourToken,
+          colorTheme: colorTheme
         });
       });
     } else {
@@ -273,12 +303,19 @@ app.route("/admin").get(function(req, res) {
 app
   .route("/admin/edit/:user")
   .get(function(req, res) {
-    let editUsername = req.params.user;
-    User.findOne({ username: editUsername }, function(err, founded) {
-      if (founded) {
-        res.render("edit-user", { username: editUsername });
-      }
-    });
+    if (req.user.admin) {
+      let editUsername = req.params.user;
+      User.findOne({ username: editUsername }, function(err, founded) {
+        if (founded) {
+          res.render("edit-user", {
+            username: editUsername,
+            colorTheme: colorTheme
+          });
+        }
+      });
+    } else {
+      res.redirect("/");
+    }
   })
   .post(function(req, res) {
     console.log(req.body.delete);
@@ -320,7 +357,11 @@ app
 app
   .route("/admin/new")
   .get(function(req, res) {
-    res.render("create-user");
+    if (req.user.admin) {
+      res.render("create-user", { colorTheme: colorTheme });
+    } else {
+      res.redirect("/");
+    }
   })
   .post(function(req, res) {
     if (req.body.isAdmin === "on") {
@@ -332,9 +373,7 @@ app
           admin: true
         },
         req.body.password,
-        function(err, res) {
-          res.redirect("/admin");
-        }
+        function(err, res) {}
       );
       res.redirect("/admin");
     } else {
@@ -346,9 +385,7 @@ app
           admin: false
         },
         req.body.password,
-        function(err, res) {
-          res.redirect("/admin");
-        }
+        function(err, res) {}
       );
       res.redirect("/admin");
     }

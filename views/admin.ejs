@@ -13,26 +13,26 @@
     <div class="table flex flex-row w-screen ">
       <% usersDB.forEach(function(user){ %>
       <div class="col flex justify-center">
-        <p class="p-2 bg-white w-32 border-b-2 border-indigo-500 overflow-y-auto"><%= user.username %></p>
-        <p class="p-2 bg-white w-56 border-b-2 border-indigo-500 overflow-y-auto"><%= user.email %></p class="p-2">
-        <p class="p-2 bg-white w-32 border-b-2 border-indigo-500 overflow-y-auto"><%= user.tokens %><%= tokenSymbol %></p class="p-2">
+        <p class="p-2 bg-white w-32 border-b-2 border-<%= colorTheme %>-500 overflow-y-auto"><%= user.username %></p>
+        <p class="p-2 bg-white w-56 border-b-2 border-<%= colorTheme %>-500 overflow-y-auto"><%= user.email %></p class="p-2">
+        <p class="p-2 bg-white w-32 border-b-2 border-<%= colorTheme %>-500 overflow-y-auto"><%= user.tokens %><%= tokenSymbol %></p class="p-2">
         
             <% if(user.admin){ %>
-                <p class="p-2 w-32 bg-white text-red-500 border-indigo-500 font-bold w-32 border-b-2 overflow-y-auto">Admin
+                <p class="p-2 w-32 bg-white text-red-500 border-<%= colorTheme %>-500 font-bold w-32 border-b-2 overflow-y-auto">Admin
 
                 <% } else { %>
-                    <p class=" p-2 bg-white w-32 border-indigo-500 border-b-2 overflow-y-auto">User
+                    <p class=" p-2 bg-white w-32 border-<%= colorTheme %>-500 border-b-2 overflow-y-auto">User
                     <% } %>
                 </p>
 
                 
-                <div class="edit p-2 bg-white w-56 border-b-2 border-indigo-500 overflow-y-auto">
-                  <% if(user.admin === true) { } else { %>
+                <div class="edit p-2 bg-white w-56 border-b-2 border-<%= colorTheme %>-500 overflow-y-auto">
+                 
 
-                    <a href="/admin/edit/<%= user.username %>" class=" w-32 shadow p-2 bg-indigo-500 text-center rounded m-2 justify-center  w-32 border-b-2 border-indigo-500 overflow-y-auto text-white font-bold hidden hover:bg-indigo-400 lg:flex">
+                    <a href="/admin/edit/<%= user.username %>" class=" w-32 shadow p-2 bg-<%= colorTheme %>-500 text-center rounded m-2 justify-center  w-32 border-b-2 border-<%= colorTheme %>-500 overflow-y-auto text-white font-bold hidden hover:bg-<%= colorTheme %>-400 lg:flex">
                     EDIT
                     </a>
-                    <% } %>
+                   
                 </div>
 
 
@@ -44,5 +44,9 @@
       <a href="/admin/new/" class=" w-32 shadow p-2 bg-teal-500 text-center rounded m-2 justify-center  w-32 overflow-y-auto text-white font-bold hidden hover:bg-teal-400 lg:flex">
       CREATE</a>
     </div>
+
+<!--  TODO   <div class="stats flex">
+      Total number of Tonkens: 
+    </div> -->
   </body>
 </html>
