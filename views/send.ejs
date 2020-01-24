@@ -9,13 +9,15 @@
 
     <title>Send <%= tokenName %>s</title>
   </head>
-  <body class="bg-gray-200">
+  <body class="">
     <%- include("partial/nav") %>
 
     <div
       class="card mx-6 flex flex-col my-16 max-w-2xl justify-around sm:mx-auto sm:flex-row  "
     >
-      <div class="profile-card flex-col bg-white rounded flex-1 shadow mr-2 ">
+      <div
+        class="profile-card flex-col bg-<%= colorTheme %>-500 rounded flex-1 shadow mr-2 "
+      >
         <!--         Amount to Send
  -->
         <div class="wallet-amount ">
@@ -25,7 +27,7 @@
             class="flex flex-col items-center m-auto w-full"
           >
             <div class="item flex flex-col">
-              <label for="username" class=" font-bold mt-10 mb-2 text-gray-700"
+              <label for="username" class=" font-bold mt-10 mb-2 text-white"
                 >To
               </label>
               <input
@@ -33,35 +35,45 @@
                 name="receiver"
                 id="username"
                 placeholder="Username"
-                class="bg-gray-200 w-64  rounded text-center  mb-2 h-10 "
+                class="bg-white shadow-lg w-64  rounded text-center  mb-2 h-10 "
               />
             </div>
 
             <p class=" text-red-500 "><%= error %></p>
 
             <div class="item flex flex-col">
-              <label for="" class=" font-bold text-gray-700 mt-2">Amount</label>
+              <label for="" class=" font-bold text-white mt-2">Amount</label>
               <input
                 type="number"
                 name="amount"
                 id=""
                 placeholder="100"
-                class="bg-gray-200 w-64 border rounded  text-center mt-2 mb-2 h-10 "
+                class="bg-white shadow-lg w-64 border rounded  text-center mt-2 mb-2 h-10 "
               />
+            </div>
+            <div class="item flex flex-col">
+              <label for="" class=" font-bold text-white mt-2">Message</label>
+              <textarea
+                name="message"
+                id=""
+                cols="30"
+                rows="10"
+                class="bg-white shadow-lg rounded w-64 h-24 mt-2"
+              ></textarea>
             </div>
 
             <p class=" mb-5 text-red-500 "><%= amountError %></p>
 
-            <div class="flex flex-row">
+            <div class="flex flex-row mt-2 mb-2">
               <button
                 type="submit"
-                class=" cursor-pointer mx-2 shadow px-4 py-2 mt-5 mb-8 text-white font-bold bg-<%= colorTheme %>-500 rounded hover:bg-<%= colorTheme %>-600"
+                class=" cursor-pointer text-lg mx-2 shadow px-6 py-4  mb-8 text-white font-bold bg-<%= colorTheme %>-400 rounded hover:bg-<%= colorTheme %>-600"
               >
                 CONFIRM
               </button>
               <a href="/home">
                 <div
-                  class="cursor-pointer mx-2 shadow px-4 py-2 mt-5 mb-8 text-white font-bold bg-red-500 rounded hover:bg-red-600"
+                  class="cursor-pointer text-lg mx-2 shadow px-6 py-4  mb-8 text-white font-bold bg-red-500 rounded hover:bg-red-600"
                 >
                   CANCEL
                 </div>

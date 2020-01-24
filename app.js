@@ -8,12 +8,8 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const findOrCreate = require("mongoose-findorcreate");
 
-/* TODO: Deleting profile picture? const defaultPicture = "img/profil.jpg";
- */
-
 /* THEME COLOR 
 Available colors : 
-gray (NOT RECOMMENDED)
 red
 orange
 yellow
@@ -30,6 +26,7 @@ const colorTheme = "indigo";
 Recommended : 0
 Default value: 50
  */
+
 const defaultTokens = 50;
 
 /* NAME YOUR TOKEN.
@@ -93,7 +90,8 @@ const userSchema = new mongoose.Schema({
 const historySchema = new mongoose.Schema({
   fromUsername: String,
   toUsername: String,
-  amount: Number
+  amount: Number,
+  message: String
 });
 
 userSchema.plugin(passportLocalMongoose);
@@ -162,6 +160,8 @@ app.route("/home").get(function(req, res) {
         });
       }
     );
+  } else {
+    res.redirect("/");
   }
 });
 
@@ -199,13 +199,17 @@ app
 app
   .route("/send")
   .get(function(req, res) {
-    res.render("send", {
-      error: " ",
-      amountError: "",
-      tokenName: nameOfYourToken,
-      tokenSymbol: tokenSymbol,
-      colorTheme: colorTheme
-    });
+    if (req.isAuthenticated()) {
+      res.render("send", {
+        error: " ",
+        amountError: "",
+        tokenName: nameOfYourToken,
+        tokenSymbol: tokenSymbol,
+        colorTheme: colorTheme
+      });
+    } else {
+      res.redirect("/");
+    }
   })
   .post(function(req, res) {
     if (
@@ -230,8 +234,7 @@ app
               fromUsername: req.user.username,
               toUsername: req.body.receiver,
               amount: req.body.amount,
-              tokenName: nameOfYourToken,
-              tokenSymbol: tokenSymbol
+              message: req.body.message
             });
 
             User.findOneAndUpdate(
@@ -390,6 +393,29 @@ app
       res.redirect("/admin");
     }
   });
+
+app.route("/transaction/:id").get(function(req, res) {
+  if (req.isAuthenticated()) {
+    TokenMovement.findOne({ _id: req.params.id }, function(err, transaction) {
+      if (
+        req.user.username === transaction.fromUsername ||
+        req.user.username === transaction.toUsername
+      ) {
+        res.render("transaction", {
+          message: transaction.message,
+          colorTheme: colorTheme,
+          from: transaction.fromUsername,
+          amount: transaction.amount,
+          symbol: tokenSymbol
+        });
+      } else {
+        res.redirect("/");
+      }
+    });
+  } else {
+    res.redirect("/");
+  }
+});
 
 app.listen("3000", function() {
   console.log("Server started at port 3000");

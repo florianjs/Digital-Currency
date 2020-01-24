@@ -8,25 +8,34 @@
     <link rel="stylesheet" href="css/styles.css" />
     <title>Admin Panel</title>
   </head>
-  <body class="bg-gray-200">
-    <h1>Hello Admin, welcome to your Dashboard</h1>
-    <div class="table flex flex-row w-screen ">
+  <body class="bg-gray-200 h-screen">
+
+          <!--     NAV BAR  
+    -->
+
+    <%- include("partial/nav") %>
+
+    <!--     END OF NAV BAR
+-->
+
+    <h1 class="text-indigo-500 text-3xl mx-auto flex justify-center mb-8 mt-4">Hello Admin, welcome to your Dashboard</h1>
+    <div class="table flex flex-row justify-center mx-auto overflow-y-auto">
       <% usersDB.forEach(function(user){ %>
-      <div class="col flex justify-center">
-        <p class="p-2 bg-white w-32 border-b-2 border-<%= colorTheme %>-500 overflow-y-auto"><%= user.username %></p>
-        <p class="p-2 bg-white w-56 border-b-2 border-<%= colorTheme %>-500 overflow-y-auto"><%= user.email %></p class="p-2">
-        <p class="p-2 bg-white w-32 border-b-2 border-<%= colorTheme %>-500 overflow-y-auto"><%= user.tokens %><%= tokenSymbol %></p class="p-2">
+      <div class="col  flex justify-center text-xl bg-white items-center max-w-4xl lg:m-2 ">
+        <p class="p-4 m-4 w-32  overflow-y-auto"><%= user.username %></p>
+        <p class="p-4 bg-white w-32 overflow-x-auto overflow-y-auto sm:overflow-x-hidden sm:w-56"><%= user.email %></p class="p-2">
+        <p class="p-4 bg-white w-32  overflow-y-auto"><%= user.tokens %><%= tokenSymbol %></p class="p-2">
         
             <% if(user.admin){ %>
-                <p class="p-2 w-32 bg-white text-red-500 border-<%= colorTheme %>-500 font-bold w-32 border-b-2 overflow-y-auto">Admin
+                <p class="p-4 w-32 bg-white text-red-500  font-bold w-32  overflow-y-auto">Admin
 
                 <% } else { %>
-                    <p class=" p-2 bg-white w-32 border-<%= colorTheme %>-500 border-b-2 overflow-y-auto">User
+                    <p class=" p-4 bg-white w-32  overflow-y-auto">User
                     <% } %>
                 </p>
 
                 
-                <div class="edit p-2 bg-white w-56 border-b-2 border-<%= colorTheme %>-500 overflow-y-auto">
+                <div class="edit p-2 bg-white w-56  overflow-y-auto">
                  
 
                     <a href="/admin/edit/<%= user.username %>" class=" w-32 shadow p-2 bg-<%= colorTheme %>-500 text-center rounded m-2 justify-center  w-32 border-b-2 border-<%= colorTheme %>-500 overflow-y-auto text-white font-bold hidden hover:bg-<%= colorTheme %>-400 lg:flex">
@@ -41,7 +50,7 @@
       <% }) %>
     </div>
     <div class="actions flex justify-center">
-      <a href="/admin/new/" class=" w-32 shadow p-2 bg-teal-500 text-center rounded m-2 justify-center  w-32 overflow-y-auto text-white font-bold hidden hover:bg-teal-400 lg:flex">
+      <a href="/admin/new/" class=" m-2 shadow py-2 px-8 text-2xl bg-teal-400 text-center rounded m-2 justify-center  text-white font-bold hover:bg-teal-500 lg:flex">
       CREATE</a>
     </div>
 

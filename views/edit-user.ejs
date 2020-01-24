@@ -10,8 +10,8 @@
     <title>Admin Panel</title>
   </head>
   <body class="bg-gray-200 ">
-    <div class="col flex flex-col m-auto w-56">
-      <h1 class="text-<%= colorTheme %>-500 text-center text-4xl">
+    <div class="col flex flex-col m-auto w-64">
+      <h1 class="text-<%= colorTheme %>-500 text-center text-4xl my-8">
         Edit <%= username %>
       </h1>
 
@@ -41,18 +41,20 @@
           placeholder="New Total Token Amount"
           class="rounded m-2 p-2 text-center"
         />
-        <label for="delete" class=" uppercase font-black text-red-500 "
+        <label
+          for="delete"
+          class=" uppercase text-center text-lg text-red-500 m-2"
           >Delete this user? <input type="checkbox" name="delete" id="delete"
         /></label>
         <button
           type="submit"
-          class=" cursor-pointer text-center mx-2 shadow px-4 py-2 mt-5 mb-2 text-white font-bold bg-<%= colorTheme %>-500 rounded hover:bg-<%= colorTheme %>-600"
+          class=" cursor-pointer text-center mx-2 shadow py-2 px-8 text-2xl mt-5 mb-2 text-white font-bold bg-<%= colorTheme %>-500 rounded hover:bg-<%= colorTheme %>-600"
         >
           CONFIRM
         </button>
         <a
           href="/admin"
-          class="cursor-pointer text-center mx-2 shadow px-4 py-2 mt-2 mb-8 text-white font-bold bg-red-500 rounded hover:bg-red-600"
+          class="cursor-pointer text-center mx-2 shadow py-2 px-8 text-2xl mt-2 mb-8 text-white font-bold bg-red-500 rounded hover:bg-red-600"
           >CANCEL</a
         >
       </form>

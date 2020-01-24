@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <base href="/" />
+
+    <link rel="stylesheet" href="css/output.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <title>Transaction Hystory</title>
+
+    <script
+      src="https://kit.fontawesome.com/6b7ea7f5e7.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body class="">
+    <%- include("partial/nav") %>
+
+    <div
+      class="card mx-6 flex flex-col my-16 max-w-2xl justify-around sm:mx-auto sm:flex-row  "
+    >
+      <div
+        class="profile-card p-4  flex-col bg-<%= colorTheme %>-500 rounded flex-1 shadow mr-2 "
+      >
+        <h2 class="text-xl text-white">FROM: <span><%= from %></span></h2>
+        <h2 class="text-xl text-white font-bold">
+          AMOUNT: <%= amount %> <%= symbol %>
+        </h2>
+
+        <h2 class="text-xl text-white">MESSAGE:</h2>
+        <div class="textarea p-2 bg-white m-4">
+          <p>
+            <%= message %>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions flex justify-center">
+      <a
+        href="/home"
+        class=" m-2 shadow py-2 px-8 text-2xl bg-<%= colorTheme %>-500 text-center rounded m-2 justify-center  text-white font-bold hover:bg-<%= colorTheme %>-600 lg:flex"
+      >
+        <i
+          class="fas fa-chevron-left text-white fa-sm  self-center mr-1 hover:mr-2 "
+        ></i
+        >BACK</a
+      >
+    </div>
+  </body>
+</html>
