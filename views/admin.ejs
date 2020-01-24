@@ -7,10 +7,14 @@
     <link rel="stylesheet" href="css/output.css" />
     <link rel="stylesheet" href="css/styles.css" />
     <title>Admin Panel</title>
+
+    <script
+      src="https://kit.fontawesome.com/6b7ea7f5e7.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body class="bg-gray-200 h-screen">
-
-          <!--     NAV BAR  
+    <!--     NAV BAR  
     -->
 
     <%- include("partial/nav") %>
@@ -18,43 +22,34 @@
     <!--     END OF NAV BAR
 -->
 
-    <h1 class="text-indigo-500 text-3xl mx-auto flex justify-center mb-8 mt-4">Hello Admin, welcome to your Dashboard</h1>
-    <div class="table flex flex-row justify-center mx-auto overflow-y-auto">
-      <% usersDB.forEach(function(user){ %>
-      <div class="col  flex justify-center text-xl bg-white items-center max-w-4xl lg:m-2 ">
-        <p class="p-4 m-4 w-32  overflow-y-auto"><%= user.username %></p>
-        <p class="p-4 bg-white w-32 overflow-x-auto overflow-y-auto sm:overflow-x-hidden sm:w-56"><%= user.email %></p class="p-2">
-        <p class="p-4 bg-white w-32  overflow-y-auto"><%= user.tokens %><%= tokenSymbol %></p class="p-2">
-        
-            <% if(user.admin){ %>
-                <p class="p-4 w-32 bg-white text-red-500  font-bold w-32  overflow-y-auto">Admin
+    <h1 class="text-indigo-500 text-3xl mx-auto flex justify-center mb-12 mt-4">
+      Hello Admin, welcome to your Dashboard
+    </h1>
 
-                <% } else { %>
-                    <p class=" p-4 bg-white w-32  overflow-y-auto">User
-                    <% } %>
-                </p>
-
-                
-                <div class="edit p-2 bg-white w-56  overflow-y-auto">
-                 
-
-                    <a href="/admin/edit/<%= user.username %>" class=" w-32 shadow p-2 bg-<%= colorTheme %>-500 text-center rounded m-2 justify-center  w-32 border-b-2 border-<%= colorTheme %>-500 overflow-y-auto text-white font-bold hidden hover:bg-<%= colorTheme %>-400 lg:flex">
-                    EDIT
-                    </a>
-                   
-                </div>
-
-
-
+    <div
+      class="container flex flex-col justify-center mx-auto sm:flex-wrap sm:flex-row "
+    >
+      <div
+        class="tokens bg-white rounded p-8 text-center text-indigo-500 text-xl m-4"
+      >
+        <h1 class="mb-2">Total number of tokens</h1>
+        <h1>100</h1>
       </div>
-      <% }) %>
-    </div>
-    <div class="actions flex justify-center">
-      <a href="/admin/new/" class=" m-2 shadow py-2 px-8 text-2xl bg-teal-400 text-center rounded m-2 justify-center  text-white font-bold hover:bg-teal-500 lg:flex">
-      CREATE</a>
+      <div
+        class="tokens bg-white rounded p-8 text-center text-indigo-500 text-xl m-4"
+      >
+        <h1 class="mb-2">Total number of users</h1>
+        <h1>100</h1>
+      </div>
+      <div
+        class="tokens bg-white rounded p-8 text-center text-indigo-500 text-xl m-4"
+      >
+        <h1 class="mb-2">Total number of transactions</h1>
+        <h1>100</h1>
+      </div>
     </div>
 
-<!--  TODO   <div class="stats flex">
+    <!--  TODO   <div class="stats flex">
       Total number of Tonkens: 
     </div> -->
   </body>

@@ -27,7 +27,7 @@
         class="card max-h-full max-w-4xl w-auto mx-6 flex flex-col my-16 justify-around sm:mt-16 lg:w-screen lg:mx-auto sm:flex-row  "
       >
         <div
-          class="profile-card flex-col bg-<%= colorTheme %>-500 rounded-lg sm:flex-1 shadow-lg mr-2 "
+          class="profile-card flex-col bg-<%= colorTheme %>-500 rounded sm:flex-1 shadow mr-2 "
         >
           <!--         <div class="profile-picture my-2 ">
           <img
@@ -41,7 +41,7 @@
               Your Wallet
             </h1>
 
-            <h1 class=" text-3xl text-white text-center mt-5 font-bold">
+            <h1 class=" text-4xl text-white text-center font-bold">
               <%= tokens %> <%= tokenSymbol %>
             </h1>
           </div>
@@ -49,14 +49,14 @@
           <div class="buttons-wallet flex justify-center my-8">
             <a href="/send">
               <div
-                class=" cursor-pointer mx-2 shadow py-2 px-8 text-2xl mt-5 mb-8 ml-5 text-white font-bold bg-<%= colorTheme %>-700 rounded hover:bg-<%= colorTheme %>-600"
+                class=" cursor-pointer mx-2 shadow-lg py-2 px-8 text-2xl mt-5 mb-8 ml-5 text-white font-bold bg-<%= colorTheme %>-700 rounded hover:bg-<%= colorTheme %>-600"
               >
                 SEND
               </div>
             </a>
             <a href="/claim">
               <div
-                class="cursor-pointer mx-2 shadow py-2 px-8 text-2xl mt-5 mb-8 mr-5 text-white font-bold bg-<%= colorTheme %>-700 rounded hover:bg-<%= colorTheme %>-600"
+                class="cursor-pointer mx-2 shadow-lg py-2 px-8 text-2xl mt-5 mb-8 mr-5 text-white font-bold bg-<%= colorTheme %>-700 rounded hover:bg-<%= colorTheme %>-600"
               >
                 CLAIM
               </div>

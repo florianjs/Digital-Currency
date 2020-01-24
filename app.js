@@ -294,7 +294,8 @@ app.route("/admin").get(function(req, res) {
           usersDB: users,
           tokenSymbol: tokenSymbol,
           nameOfYourToken: nameOfYourToken,
-          colorTheme: colorTheme
+          colorTheme: colorTheme,
+          totTokens: 100
         });
       });
     } else {
@@ -415,6 +416,26 @@ app.route("/transaction/:id").get(function(req, res) {
   } else {
     res.redirect("/");
   }
+});
+
+app.route("/admin/user-list").get(function(req, res) {
+  User.findOne({ admin: true, username: req.user.username }, function(
+    err,
+    founded
+  ) {
+    if (req.isAuthenticated() && founded) {
+      User.find({}, function(err, users) {
+        res.render("admin-list", {
+          usersDB: users,
+          tokenSymbol: tokenSymbol,
+          nameOfYourToken: nameOfYourToken,
+          colorTheme: colorTheme
+        });
+      });
+    } else {
+      res.sendStatus(404);
+    }
+  });
 });
 
 app.listen("3000", function() {
