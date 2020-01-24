@@ -15,13 +15,7 @@
   </head>
   <body class="bg-gray-200 h-screen ">
     <div id="wrapper" class="flex flex-col h-full">
-      <!--     NAV BAR  
-    -->
-
       <%- include("partial/nav") %>
-
-      <!--     END OF NAV BAR
- -->
 
       <h1
         class=" text-center text-<%= colorTheme %>-500  invisible sm:visible sm:text-4xl "
@@ -30,7 +24,7 @@
       </h1>
 
       <div
-        class="card max-w-4xl w-auto  mx-6 flex flex-col my-16 sm:my-32 lg:w-screen  justify-around lg:mx-auto sm:flex-row  "
+        class="card max-h-full max-w-4xl w-auto mx-6 flex flex-col my-16 justify-around sm:mt-16 lg:w-screen lg:mx-auto sm:flex-row  "
       >
         <div
           class="profile-card flex-col bg-<%= colorTheme %>-500 rounded-lg sm:flex-1 shadow-lg mr-2 "
@@ -52,17 +46,17 @@
             </h1>
           </div>
 
-          <div class="buttons-wallet flex justify-center my-4">
+          <div class="buttons-wallet flex justify-center my-8">
             <a href="/send">
               <div
-                class=" cursor-pointer mx-2 shadow py-2 px-8 text-2xl mt-5 mb-8 text-white font-bold bg-<%= colorTheme %>-700 rounded hover:bg-<%= colorTheme %>-600"
+                class=" cursor-pointer mx-2 shadow py-2 px-8 text-2xl mt-5 mb-8 ml-5 text-white font-bold bg-<%= colorTheme %>-700 rounded hover:bg-<%= colorTheme %>-600"
               >
                 SEND
               </div>
             </a>
             <a href="/claim">
               <div
-                class="cursor-pointer mx-2 shadow py-2 px-8 text-2xl mt-5 mb-8 text-white font-bold bg-<%= colorTheme %>-700 rounded hover:bg-<%= colorTheme %>-600"
+                class="cursor-pointer mx-2 shadow py-2 px-8 text-2xl mt-5 mb-8 mr-5 text-white font-bold bg-<%= colorTheme %>-700 rounded hover:bg-<%= colorTheme %>-600"
               >
                 CLAIM
               </div>
@@ -73,17 +67,17 @@
         <!-- HISTORY -->
 
         <div
-          class="history-card  overflow-hidden flex-1 bg-gray-200 rounded p-2 h-64 "
+          class="history-card min-h-full h-64 bg-gray-200 rounded px-2 overflow-y-scroll mt-5 sm:m-auto sm:self-center   "
         >
-          <h2 class="text-center mb-3  text-<%= colorTheme %>-500 text-2xl ">
+          <!--           <h2 class="text-center mb-3  text-<%= colorTheme %>-500 text-2xl ">
             HISTORY
-          </h2>
+          </h2> -->
 
           <% history.reverse() %> <% history.forEach(function(i){ %> <% if(user
           === i.fromUsername) { %>
           <a href="/transaction/<%= i._id %>">
             <p
-              class="mx-2  font-bold text-white bg-red-500 shadow rounded mb-3 p-2 text-center mt-3 sm:mt-auto"
+              class="mx-2  font-bold text-white bg-red-500 shadow rounded mb-3 text-lg p-3 text-center mt-3 sm:mt-auto"
             >
               You sent <%= i.amount %> <%= tokenSymbol %> to <%= i.toUsername %>
               <% if(i.message){ %>
@@ -95,7 +89,7 @@
           <% } else { %>
           <a href="/transaction/<%= i._id %>">
             <p
-              class="mx-2 font-bold text-white bg-green-500 shadow rounded mb-3 p-2 text-center mt-3 sm:mt-auto"
+              class="mx-2 font-bold text-white bg-green-500 shadow rounded mb-3 p-3 text-lg text-center mt-3 sm:mt-auto"
             >
               <%= i.fromUsername %> sent you <%= i.amount %> <%= tokenSymbol %>
               <% if(i.message){ %>
@@ -109,7 +103,6 @@
           <% }; }) %>
         </div>
       </div>
-
       <%- include("partial/footer") %>
     </div>
   </body>
