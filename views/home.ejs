@@ -75,29 +75,27 @@
 
           <% history.reverse() %> <% history.forEach(function(i){ %> <% if(user
           === i.fromUsername) { %>
-          <a href="/transaction/<%= i._id %>">
-            <p
-              class="mx-2  font-bold text-white bg-red-500 shadow rounded mb-3 text-lg p-3 text-center mt-3 sm:mt-auto"
-            >
+          <a
+            href="/transaction/<%= i._id %>"
+            class="flex justify-between items-center mx-2 font-bold text-white bg-red-500 shadow rounded my-3 text-lg p-3 text-center sm:mt-auto"
+          >
+            <p class="text-center">
               You sent <%= i.amount %> <%= tokenSymbol %> to <%= i.toUsername %>
-              <% if(i.message){ %>
-              <i class="far fa-envelope mx-2 fa-lg"></i>
-              <% } %>
             </p>
+            <% if(i.message){ %> <i class="far fa-envelope mx-4 fa-lg"></i>
+            <% } %>
           </a>
 
           <% } else { %>
-          <a href="/transaction/<%= i._id %>">
-            <p
-              class="mx-2 font-bold text-white bg-green-500 shadow rounded mb-3 p-3 text-lg text-center mt-3 sm:mt-auto"
-            >
+          <a
+            href="/transaction/<%= i._id %>"
+            class="flex justify-between items-center mx-2 font-bold text-white bg-green-500 shadow rounded mb-3 p-3 text-lg text-center mt-3 sm:mt-auto"
+          >
+            <p class="">
               <%= i.fromUsername %> sent you <%= i.amount %> <%= tokenSymbol %>
-              <% if(i.message){ %>
-
-              <i class="far fa-envelope mx-2 fa-lg"></i>
-
-              <% } %>
             </p>
+            <% if(i.message){ %> <i class="far fa-envelope mx-4 fa-lg"></i> <% }
+            %>
           </a>
 
           <% }; }) %>
