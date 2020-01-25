@@ -252,7 +252,6 @@ app
               }
             );
           } else {
-            console.log("Username doesn't exist");
             res.render("send", {
               error: "User doesn't exist",
               amountError: "",
@@ -322,7 +321,6 @@ app
     }
   })
   .post(function(req, res) {
-    console.log(req.body.delete);
     User.findOne({ username: req.params.user }, function(err, founded) {
       if (req.body.newName.length != 0) {
         founded.username = req.body.newName;
