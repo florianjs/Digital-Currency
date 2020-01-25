@@ -24,11 +24,11 @@
     <!--     END OF NAV BAR
 -->
 
-    <h1 class="text-indigo-500 text-3xl mx-auto flex justify-center mb-8 mt-4">
+    <h1 class="text-indigo-500 text-3xl mx-auto flex  justify-center mb-8 mt-4">
       User list
     </h1>
 
-    <div class="container flex flex-col justify-center mx-auto ">
+    <div class="container flex flex-col justify-center m-auto">
       <div class="actions flex justify-center">
         <a
           href="/admin/new/"
@@ -46,12 +46,10 @@
           >BACK</a
         >
       </div>
-      <div
-        class="table flex flex-row justify-center mx-auto max-h-screen overflow-y-auto"
-      >
+      <div class="table flex mx-auto">
         <% usersDB.forEach(function(user){ %>
         <div
-          class="col  flex justify-center text-xl bg-white items-center max-w-4xl lg:m-2 "
+          class="flex justify-center text-xl bg-white items-center max-w-4xl lg:m-2 "
         >
           <p class="p-4 m-4 w-32  overflow-y-auto"><%= user.username %></p>
           <p class="p-4 bg-white w-32 overflow-x-auto overflow-y-auto sm:w-56">
