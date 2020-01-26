@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="css/output.css" />
     <link rel="stylesheet" href="css/styles.css" />
-    <title>Document</title>
+    <title>Your <%= tokenName %> wallet</title>
     <script
       src="https://kit.fontawesome.com/6b7ea7f5e7.js"
       crossorigin="anonymous"
@@ -27,14 +27,14 @@
         class="card max-h-full max-w-4xl w-auto mx-6 flex flex-col my-16  sm:mt-16 lg:w-screen lg:mx-auto sm:flex-row sm:justify-around  "
       >
         <div
-          class="profile-card flex-col bg-<%= colorTheme %>-700 rounded sm:flex-1 shadow mr-2 "
+          class="profile-card shadow-lg flex-col bg-<%= colorTheme %>-700 rounded sm:flex-1  mr-2 "
         >
           <div class="profile-picture my-2 hidden sm:flex ">
             <a href="http://gravatar.com" target="_blank" class="mx-auto ">
               <img
                 src="<%= pictureURL %>"
                 alt=""
-                class="rounded-full h-32 w-32 border-<%= colorTheme %>-700 shadow-lg border-4 -mt-16 top-0"
+                class="rounded-full h-32 w-32 border-<%= colorTheme %>-700 shadow-lg border-4 -mt-16 top-0 hover:opacity-75"
             /></a>
           </div>
           <div class="wallet-amount">
@@ -73,7 +73,7 @@
           <div class="row flex">
             <a
               href="/transaction/<%= i._id %>"
-              class="flex flex-1 justify-between items-center mx-2 font-bold text-white bg-red-500 shadow rounded my-3 text-lg p-3 text-center sm:mt-auto"
+              class="flex flex-1 justify-between items-center mx-2 font-medium text-center text-red-500 bg-white shadow rounded my-3 text-lg p-3 text-center sm:mt-auto"
             >
               <p class="text-center">
                 You sent <%= i.amount %> <%= tokenSymbol %> to <%= i.toUsername
@@ -85,7 +85,7 @@
             <img
               src="<%= i.gravatarTo %>"
               alt=""
-              class=" h-12 w-12 rounded-full ml-2 align-middle hidden sm:flex"
+              class=" h-12 w-12 rounded-full mx-2 align-middle hidden sm:flex"
             />
           </div>
 
@@ -98,7 +98,7 @@
             />
             <a
               href="/transaction/<%= i._id %>"
-              class="flex flex-1 justify-between items-center mx-2 font-bold text-white bg-green-500 shadow rounded mb-3 p-3 text-lg text-center mt-3 sm:mt-auto"
+              class="flex flex-1 justify-between items-center mx-2 font-medium text-green-500 bg-white shadow rounded mb-3 p-3 text-lg text-center mt-3 sm:mt-auto"
             >
               <p class="">
                 <%= i.fromUsername %> sent you <%= i.amount %> <%= tokenSymbol

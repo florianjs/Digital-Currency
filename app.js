@@ -7,7 +7,7 @@ const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const findOrCreate = require("mongoose-findorcreate");
-var gravatar = require("gravatar");
+const gravatar = require("gravatar");
 
 /* THEME COLOR 
 Available colors : 
@@ -21,7 +21,7 @@ indigo (DEFAULT)
 purple
 pink
 */
-const colorTheme = "indigo";
+const colorTheme = "purple";
 
 /* DEFAULT AMOUNT OF TOKENS WHEN A USER REGISTER. 
 Recommended : 0

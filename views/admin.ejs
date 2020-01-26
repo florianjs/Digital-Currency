@@ -24,7 +24,9 @@
     <!--     END OF NAV BAR
 -->
 
-    <h1 class="text-indigo-500 text-3xl mx-auto flex justify-center mb-12 mt-4">
+    <h1
+      class="text-<%= colorTheme %>-500 text-3xl mx-auto flex justify-center mb-12 mt-4"
+    >
       Hello Admin, welcome to your Dashboard
     </h1>
 
@@ -32,7 +34,7 @@
       class="container flex flex-col justify-center mx-auto sm:flex-wrap sm:flex-row "
     >
       <div
-        class="tokens bg-white rounded p-8 text-center text-indigo-500 text-xl m-4"
+        class="tokens bg-white rounded p-8 text-center text-<%= colorTheme %>-500 text-xl m-4"
       >
         <h1 class="mb-2">Total number of <%= nameOfYourToken %></h1>
 
@@ -40,10 +42,10 @@
         usersDB.forEach(function(user){ totTokens = totTokens + user.tokens; });
         return totTokens; } %>
 
-        <h1 class="text-indigo-500"><%= totalTokens() %></h1>
+        <h1 class="text-<%= colorTheme %>-500"><%= totalTokens() %></h1>
       </div>
       <div
-        class="tokens bg-white rounded p-8 text-center text-indigo-500 text-xl m-4"
+        class="tokens bg-white rounded p-8 text-center text-<%= colorTheme %>-500 text-xl m-4"
       >
         <h1 class="mb-2">Total number of users</h1>
 
@@ -51,10 +53,10 @@
         usersDB.forEach(function(user){ totUser = totUser + 1}); return totUser;
         } %>
 
-        <h1 class="text-indigo-500"><%= totalUsers() %></h1>
+        <h1 class="text-<%= colorTheme %>-500"><%= totalUsers() %></h1>
       </div>
       <div
-        class="tokens bg-white rounded p-8 text-center text-indigo-500 text-xl m-4"
+        class="tokens bg-white rounded p-8 text-center text-<%= colorTheme %>-500 text-xl m-4"
       >
         <h1 class="mb-2">Total number of transactions</h1>
         <h1>100</h1>
