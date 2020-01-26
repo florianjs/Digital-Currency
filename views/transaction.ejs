@@ -23,8 +23,16 @@
       class="card mx-6 flex flex-col my-16 max-w-2xl justify-around sm:mx-auto sm:flex-row  "
     >
       <div
-        class="profile-card p-4  flex-col bg-<%= colorTheme %>-500 rounded flex-1 shadow mr-2 "
+        class="profile-card p-4  flex-col bg-<%= colorTheme %>-700 rounded flex-1 shadow mr-2 "
       >
+        <div class="profil-picture flex m-auto justify-center">
+          <img
+            src="<%= gravatarFrom %>"
+            alt=""
+            class="h-32 w-32 rounded-full -mt-16 border-4 shadow-lg border-<%= colorTheme %>-600"
+          />
+        </div>
+
         <h2 class="text-xl text-white">FROM: <span><%= from %></span></h2>
         <h2 class="text-xl text-white font-bold">
           AMOUNT: <%= amount %> <%= symbol %>

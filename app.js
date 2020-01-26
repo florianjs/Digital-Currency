@@ -7,6 +7,7 @@ const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const findOrCreate = require("mongoose-findorcreate");
+var gravatar = require("gravatar");
 
 /* THEME COLOR 
 Available colors : 
@@ -91,7 +92,9 @@ const historySchema = new mongoose.Schema({
   fromUsername: String,
   toUsername: String,
   amount: Number,
-  message: String
+  message: String,
+  gravatarFrom: String,
+  gravatarTo: String
 });
 
 userSchema.plugin(passportLocalMongoose);
@@ -147,16 +150,17 @@ app.route("/home").get(function(req, res) {
         ]
       },
       function(err, founded) {
+        const pictureURL = gravatar.url(req.user.email, { s: 128 });
+
         res.render("home", {
-          /* TODO Picture or not picture? That is the question. */
-          /*           defaultPicture: defaultPicture,
-           */ tokens: req.user.tokens,
+          tokens: req.user.tokens,
           username: req.user.username,
           history: founded,
           user: req.user.username,
           tokenName: nameOfYourToken,
           tokenSymbol: tokenSymbol,
-          colorTheme: colorTheme
+          colorTheme: colorTheme,
+          pictureURL: pictureURL
         });
       }
     );
@@ -230,11 +234,15 @@ app
             });
           }
           if (founded) {
+            const gravatarFrom = gravatar.url(req.user.email, { s: 128 });
+            const gravatarTo = gravatar.url(founded.email, { s: 128 });
             const history = new TokenMovement({
               fromUsername: req.user.username,
               toUsername: req.body.receiver,
               amount: req.body.amount,
-              message: req.body.message
+              message: req.body.message,
+              gravatarFrom: gravatarFrom,
+              gravatarTo: gravatarTo
             });
 
             User.findOneAndUpdate(
@@ -405,7 +413,9 @@ app.route("/transaction/:id").get(function(req, res) {
           colorTheme: colorTheme,
           from: transaction.fromUsername,
           amount: transaction.amount,
-          symbol: tokenSymbol
+          symbol: tokenSymbol,
+          gravatarFrom: transaction.gravatarFrom,
+          gravatarTo: transaction.gravatarTo
         });
       } else {
         res.redirect("/");

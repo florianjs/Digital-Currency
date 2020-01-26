@@ -24,20 +24,21 @@
       </h1>
 
       <div
-        class="card max-h-full max-w-4xl w-auto mx-6 flex flex-col my-16 justify-around sm:mt-16 lg:w-screen lg:mx-auto sm:flex-row  "
+        class="card max-h-full max-w-4xl w-auto mx-6 flex flex-col my-16  sm:mt-16 lg:w-screen lg:mx-auto sm:flex-row sm:justify-around  "
       >
         <div
-          class="profile-card flex-col bg-<%= colorTheme %>-500 rounded sm:flex-1 shadow mr-2 "
+          class="profile-card flex-col bg-<%= colorTheme %>-700 rounded sm:flex-1 shadow mr-2 "
         >
-          <!--         <div class="profile-picture my-2 ">
-          <img
-            src=""
-            alt=""
-            class="rounded-full h-24 w-24 mx-auto  -mt-12 top-0"
-          />
-        </div> -->
+          <div class="profile-picture my-2 hidden sm:flex ">
+            <a href="http://gravatar.com" target="_blank" class="mx-auto ">
+              <img
+                src="<%= pictureURL %>"
+                alt=""
+                class="rounded-full h-32 w-32 border-indigo-700 shadow-lg border-4 -mt-16 top-0"
+            /></a>
+          </div>
           <div class="wallet-amount">
-            <h1 class=" text-3xl text-white text-center mt-12">
+            <h1 class=" text-3xl text-white text-center mt-4">
               Your Wallet
             </h1>
 
@@ -49,16 +50,10 @@
           <div class="buttons-wallet flex justify-center my-8">
             <a href="/send">
               <div
-                class=" cursor-pointer mx-2 shadow-lg py-2 px-8 text-2xl mt-5 mb-8 ml-5 text-white font-bold bg-<%= colorTheme %>-700 rounded hover:bg-<%= colorTheme %>-600"
+                class=" cursor-pointer mx-2 shadow-lg py-2 px-8 text-2xl mt-5 mb-8 ml-5 text-white font-bold bg-<%= colorTheme %>-500 rounded hover:bg-<%= colorTheme %>-400"
               >
                 SEND
-              </div>
-            </a>
-            <a href="/claim">
-              <div
-                class="cursor-pointer mx-2 shadow-lg py-2 px-8 text-2xl mt-5 mb-8 mr-5 text-white font-bold bg-<%= colorTheme %>-700 rounded hover:bg-<%= colorTheme %>-600"
-              >
-                CLAIM
+                <i class="fas fa-paper-plane ml-2 self-center"></i>
               </div>
             </a>
           </div>
@@ -67,7 +62,7 @@
         <!-- HISTORY -->
 
         <div
-          class="history-card min-h-full h-64 bg-gray-200 rounded px-2 overflow-y-scroll mt-5 sm:m-auto sm:self-center   "
+          class="history-card min-h-full h-64 bg-gray-200 rounded px-2  overflow-y-scroll mt-5 sm:m-auto sm:self-center lg:flex-1  "
         >
           <!--           <h2 class="text-center mb-3  text-<%= colorTheme %>-500 text-2xl ">
             HISTORY
@@ -75,28 +70,44 @@
 
           <% history.reverse() %> <% history.forEach(function(i){ %> <% if(user
           === i.fromUsername) { %>
-          <a
-            href="/transaction/<%= i._id %>"
-            class="flex justify-between items-center mx-2 font-bold text-white bg-red-500 shadow rounded my-3 text-lg p-3 text-center sm:mt-auto"
-          >
-            <p class="text-center">
-              You sent <%= i.amount %> <%= tokenSymbol %> to <%= i.toUsername %>
-            </p>
-            <% if(i.message){ %> <i class="far fa-envelope mx-4 fa-lg"></i>
-            <% } %>
-          </a>
+          <div class="row flex">
+            <a
+              href="/transaction/<%= i._id %>"
+              class="flex flex-1 justify-between items-center mx-2 font-bold text-white bg-red-500 shadow rounded my-3 text-lg p-3 text-center sm:mt-auto"
+            >
+              <p class="text-center">
+                You sent <%= i.amount %> <%= tokenSymbol %> to <%= i.toUsername
+                %>
+              </p>
+              <% if(i.message){ %> <i class="far fa-envelope mx-4 fa-lg"></i>
+              <% } %>
+            </a>
+            <img
+              src="<%= i.gravatarTo %>"
+              alt=""
+              class=" h-12 w-12 rounded-full ml-2 align-middle hidden sm:flex"
+            />
+          </div>
 
           <% } else { %>
-          <a
-            href="/transaction/<%= i._id %>"
-            class="flex justify-between items-center mx-2 font-bold text-white bg-green-500 shadow rounded mb-3 p-3 text-lg text-center mt-3 sm:mt-auto"
-          >
-            <p class="">
-              <%= i.fromUsername %> sent you <%= i.amount %> <%= tokenSymbol %>
-            </p>
-            <% if(i.message){ %> <i class="far fa-envelope mx-4 fa-lg"></i> <% }
-            %>
-          </a>
+          <div class="row flex">
+            <img
+              src="<%= i.gravatarFrom %>"
+              alt=""
+              class=" h-12 w-12 rounded-full mr-2 align-middle hidden sm:flex"
+            />
+            <a
+              href="/transaction/<%= i._id %>"
+              class="flex flex-1 justify-between items-center mx-2 font-bold text-white bg-green-500 shadow rounded mb-3 p-3 text-lg text-center mt-3 sm:mt-auto"
+            >
+              <p class="">
+                <%= i.fromUsername %> sent you <%= i.amount %> <%= tokenSymbol
+                %>
+              </p>
+              <% if(i.message){ %> <i class="far fa-envelope mx-4 fa-lg"></i> <%
+              } %>
+            </a>
+          </div>
 
           <% }; }) %>
         </div>
