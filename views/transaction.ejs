@@ -16,7 +16,7 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body class="">
+  <body class="bg-gray-200">
     <%- include("partial/nav") %>
 
     <div
@@ -33,14 +33,18 @@
           />
         </div>
 
-        <h2 class="text-xl text-white">FROM: <span><%= from %></span></h2>
-        <h2 class="text-xl text-white font-bold">
-          AMOUNT: <%= amount %> <%= symbol %>
+        <h2 class="text-xl text-white text-center m-4 text-4xl font-bold">
+          From <span><%= from %></span>
+        </h2>
+        <h2 class="text-xl text-white font-bold text-center text-4xl font-bold">
+          <%= amount %> <%= symbol %>
         </h2>
 
-        <h2 class="text-xl text-white">MESSAGE:</h2>
-        <div class="textarea p-2 bg-white m-4">
-          <p>
+        <h2 class="text-xl text-white text-3xl ml-4 mt-4">MESSAGE</h2>
+        <div
+          class="textarea p-2 bg-white m-4 p-2 rounded text-<%= colorTheme %>-700 text-lg "
+        >
+          <p class="p-2">
             <%= message %>
           </p>
         </div>
