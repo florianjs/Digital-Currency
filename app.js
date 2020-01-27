@@ -1,17 +1,17 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const express = require("express");
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const session = require("express-session");
-const passport = require("passport");
-const passportLocalMongoose = require("passport-local-mongoose");
-const findOrCreate = require("mongoose-findorcreate");
-const gravatar = require("gravatar");
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const session = require('express-session');
+const passport = require('passport');
+const passportLocalMongoose = require('passport-local-mongoose');
+const findOrCreate = require('mongoose-findorcreate');
+const gravatar = require('gravatar');
 
-/* THEME COLOR 
-Available colors : 
-red
+/* THEME COLOR  */
+/*  Available colors: */
+/*  red
 orange
 yellow
 green
@@ -19,53 +19,51 @@ teal
 blue
 indigo (DEFAULT)
 purple
-pink
-*/
-const colorTheme = "purple";
+pink */
+const colorTheme = 'purple';
 
-/* DEFAULT AMOUNT OF TOKENS WHEN A USER REGISTER. 
-Recommended : 0
+/* DEFAULT AMOUNT OF TOKENS WHEN A USER REGISTER. */
+/* Recommended : 0
 Default value: 50
  */
 
 const defaultTokens = 50;
 
-/* NAME YOUR TOKEN.
-Default name: Tonken 
-Default symbol TKN
+/* NAME YOUR TOKEN. */
+/* Default name Tonken */
+/* Default symbol TKN */
+
+const nameOfYourToken = 'Tonken';
+const tokenSymbol = 'TKN';
+
+/* Is your website open for public subscribers? */
+/* true = Yes */
+/* false = No, only admin can create accounts
  */
-
-const nameOfYourToken = "Tonken";
-const tokenSymbol = "TKN";
-
-/* Is your website open for public subscribers? 
-true = Yes 
-false = No, only admin can create accounts
-*/
 
 const publicRegister = true;
 
-/* NAME YOUR DATABASE
-Default URL (for testing): mongodb://localhost:27017/
-default Database Name: tonkenDB */
+/* NAME YOUR DATABASE */
+/* Default URL (for testing): mongodb://localhost:27017 */
+/* default Database Name: tonkenDB */
+/* You can leave it as it. */
 
-const nameDB = "tonkenDB";
-const urlDB = "mongodb://localhost:27017/";
+const nameDB = 'tonkenDB';
+const urlDB = 'mongodb://localhost:27017/';
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.set('view engine', 'ejs');
 
-app.set("view engine", "ejs");
-
-app.use(express.static("public"));
+app.use(express.static('public'));
 
 app.use(
   session({
     secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: false
-  })
+    saveUninitialized: false,
+  }),
 );
 app.use(passport.initialize());
 app.use(passport.session());
@@ -75,17 +73,17 @@ app.use(passport.session());
 
 mongoose.connect(urlDB + nameDB, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 });
 
-mongoose.set("useFindAndModify", false);
+mongoose.set('useFindAndModify', false);
 
 const userSchema = new mongoose.Schema({
   username: String,
   email: String,
   password: String,
   tokens: Number,
-  admin: Boolean
+  admin: Boolean,
 });
 
 const historySchema = new mongoose.Schema({
@@ -94,143 +92,146 @@ const historySchema = new mongoose.Schema({
   amount: Number,
   message: String,
   gravatarFrom: String,
-  gravatarTo: String
+  gravatarTo: String,
 });
 
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
-
-const User = mongoose.model("User", userSchema);
-const TokenMovement = mongoose.model("TokenMovement", historySchema);
+const User = mongoose.model('User', userSchema);
+const TokenMovement = mongoose.model('TokenMovement', historySchema);
 
 passport.use(User.createStrategy());
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
+passport.deserializeUser((id, done) => {
+  User.findById(id, (err, user) => {
     done(err, user);
   });
 });
 
 app
-  .route("/")
-  .get(function(req, res) {
+  .route('/')
+  .get((req, res) => {
     if (req.isAuthenticated()) {
-      res.redirect("/home");
+      res.redirect('/home');
     } else {
-      res.render("login", { register: publicRegister, colorTheme: colorTheme });
+      res.render('login', { register: publicRegister, colorTheme });
       res.end();
     }
   })
   .post(
-    passport.authenticate("local", {
-      successRedirect: "/home",
-      failureRedirect: "/"
+    passport.authenticate('local', {
+      successRedirect: '/home',
+      failureRedirect: '/',
     }),
-    function(req, res) {}
+    (req, res) => {},
   );
 
-app.get("/logout", function(req, res) {
+app.get('/logout', (req, res) => {
   req.session.destroy();
   req.logout();
   req.session = null;
-  res.redirect("/");
+  res.redirect('/');
 });
 
-app.route("/home").get(function(req, res) {
+app.route('/home').get((req, res) => {
   if (req.isAuthenticated()) {
     TokenMovement.find(
       {
+        /* ignore jslint start */
         $or: [
           { fromUsername: req.user.username },
-          { toUsername: req.user.username }
-        ]
+          { toUsername: req.user.username },
+        ],
+        /* ignore jslint end */
       },
-      function(err, founded) {
+      (err, founded) => {
         const pictureURL = gravatar.url(req.user.email, { s: 128 });
 
-        res.render("home", {
+        res.render('home', {
           tokens: req.user.tokens,
           username: req.user.username,
           history: founded,
           user: req.user.username,
           tokenName: nameOfYourToken,
-          tokenSymbol: tokenSymbol,
-          colorTheme: colorTheme,
-          pictureURL: pictureURL
+          tokenSymbol,
+          colorTheme,
+          pictureURL,
         });
-      }
+      },
     );
   } else {
-    res.redirect("/");
+    res.redirect('/');
   }
 });
 
 app
-  .route("/subscribe")
-  .get(function(req, res) {
+  .route('/subscribe')
+  .get((req, res) => {
     if (publicRegister) {
-      res.render("subscribe", { colorTheme: colorTheme });
+      res.render('subscribe', { colorTheme });
     } else {
-      res.redirect("/");
+      res.redirect('/');
     }
   })
-  .post(function(req, res) {
+  .post((req, res) => {
     User.register(
       {
         username: req.body.username,
         email: req.body.email,
         tokens: defaultTokens,
-        admin: false
+        admin: false,
       },
       req.body.password,
-      function(err, user) {
+      (err) => {
         if (err) {
-          console.log(err);
-          res.redirect("/subscribe");
+          res.redirect('/subscribe');
         } else {
-          passport.authenticate("local")(req, res, function() {
-            res.redirect("/home");
+          passport.authenticate('local')(req, res, () => {
+            res.redirect('/home');
           });
         }
-      }
+      },
     );
   });
 
 app
-  .route("/send")
-  .get(function(req, res) {
+  .route('/send')
+  .get((req, res) => {
     if (req.isAuthenticated()) {
-      res.render("send", {
-        error: " ",
-        amountError: "",
+      res.render('send', {
+        error: ' ',
+        amountError: '',
         tokenName: nameOfYourToken,
-        tokenSymbol: tokenSymbol,
-        colorTheme: colorTheme
+        tokenSymbol,
+        colorTheme,
       });
     } else {
-      res.redirect("/");
+      res.redirect('/');
     }
   })
-  .post(function(req, res) {
+  .post((req, res) => {
     if (
       req.body.receiver !== req.user.username &&
       req.body.amount <= req.user.tokens
     ) {
       User.findOneAndUpdate(
         { username: req.body.receiver },
+        /* ignore jslint start */
         { $inc: { tokens: Number(req.body.amount) } },
-        function(err, founded) {
+        /* ignore jslint end */
+
+        (err, founded) => {
           if (err) {
-            res.render("send", {
+            res.render('send', {
               error: "User doesn't exist",
-              amountError: "",
+              amountError: '',
               tokenName: nameOfYourToken,
-              tokenSymbol: tokenSymbol,
-              colorTheme: colorTheme
+              tokenSymbol,
+              colorTheme,
             });
           }
           if (founded) {
@@ -241,42 +242,47 @@ app
               toUsername: req.body.receiver,
               amount: req.body.amount,
               message: req.body.message,
-              gravatarFrom: gravatarFrom,
-              gravatarTo: gravatarTo
+              gravatarFrom,
+              gravatarTo,
             });
 
             User.findOneAndUpdate(
               { username: req.user.username },
               {
+                /* ignore jslint start */
                 $set: {
-                  tokens: Number(req.user.tokens) - Number(req.body.amount)
+                  /* ignore jslint end */
+                  tokens: Number(req.user.tokens) - Number(req.body.amount),
+                },
+              },
+              (err, found) => {
+                if (err) {
+                  console.log(err);
+                }
+                if (found) {
+                  history.save();
+                  res.redirect('/home');
                 }
               },
-              function(err, founded) {
-                if (founded) {
-                  history.save();
-                  res.redirect("/home");
-                }
-              }
             );
           } else {
-            res.render("send", {
+            res.render('send', {
               error: "User doesn't exist",
-              amountError: "",
+              amountError: '',
               tokenName: nameOfYourToken,
-              tokenSymbol: tokenSymbol,
-              colorTheme: colorTheme
+              tokenSymbol,
+              colorTheme,
             });
           }
-        }
+        },
       );
     } else {
-      res.render("send", {
-        error: "",
+      res.render('send', {
+        error: '',
         amountError: "You don't have enought tokens",
         tokenName: nameOfYourToken,
-        tokenSymbol: tokenSymbol,
-        colorTheme: colorTheme
+        tokenSymbol,
+        colorTheme,
       });
     }
   });
@@ -290,19 +296,16 @@ app
   }
 }); */
 
-app.route("/admin").get(function(req, res) {
-  User.findOne({ admin: true, username: req.user.username }, function(
-    err,
-    founded
-  ) {
+app.route('/admin').get((req, res) => {
+  User.findOne({ admin: true, username: req.user.username }, (err, founded) => {
     if (req.isAuthenticated() && founded) {
-      User.find({}, function(err, users) {
-        res.render("admin", {
+      User.find({}, (err, users) => {
+        res.render('admin', {
           usersDB: users,
-          tokenSymbol: tokenSymbol,
-          nameOfYourToken: nameOfYourToken,
-          colorTheme: colorTheme,
-          totTokens: 100
+          tokenSymbol,
+          nameOfYourToken,
+          colorTheme,
+          totTokens: 100,
         });
       });
     } else {
@@ -312,24 +315,24 @@ app.route("/admin").get(function(req, res) {
 });
 
 app
-  .route("/admin/edit/:user")
-  .get(function(req, res) {
+  .route('/admin/edit/:user')
+  .get((req, res) => {
     if (req.user.admin) {
-      let editUsername = req.params.user;
-      User.findOne({ username: editUsername }, function(err, founded) {
+      const editUsername = req.params.user;
+      User.findOne({ username: editUsername }, (err, founded) => {
         if (founded) {
-          res.render("edit-user", {
+          res.render('edit-user', {
             username: editUsername,
-            colorTheme: colorTheme
+            colorTheme,
           });
         }
       });
     } else {
-      res.redirect("/");
+      res.redirect('/');
     }
   })
-  .post(function(req, res) {
-    User.findOne({ username: req.params.user }, function(err, founded) {
+  .post((req, res) => {
+    User.findOne({ username: req.params.user }, (err, founded) => {
       if (req.body.newName.length != 0) {
         founded.username = req.body.newName;
         founded.save();
@@ -342,102 +345,105 @@ app
         founded.tokens = req.body.newTokens;
         founded.save();
       }
-      if (req.body.delete === "on") {
+      if (req.body.delete === 'on') {
         TokenMovement.deleteMany(
           {
             $or: [
               { fromUsername: founded.username },
-              { toUsername: founded.username }
-            ]
+              { toUsername: founded.username },
+            ],
           },
-          function(err) {
-            if (err) console.log(err);
-            console.log("Successful deleted history");
-          }
+          (err) => {
+            if (err) {
+              console.log(err);
+            }
+          },
         );
-        User.deleteOne({ username: founded.username }, function(err) {
-          if (err) console.log(err);
-          console.log("Successful deletion");
+        User.deleteOne({ username: founded.username }, (err) => {
+          if (err) {
+            console.log(err);
+          }
         });
       }
-      res.redirect("/admin");
+      res.redirect('/admin');
     });
   });
 
 app
-  .route("/admin/new")
-  .get(function(req, res) {
+  .route('/admin/new')
+  .get((req, res) => {
     if (req.user.admin) {
-      res.render("create-user", { colorTheme: colorTheme });
+      res.render('create-user', { colorTheme });
     } else {
-      res.redirect("/");
+      res.redirect('/');
     }
   })
-  .post(function(req, res) {
-    if (req.body.isAdmin === "on") {
+  .post((req, res) => {
+    if (req.body.isAdmin === 'on') {
       User.register(
         {
           username: req.body.newName,
           email: req.body.newEmail,
           tokens: req.body.newTokens,
-          admin: true
+          admin: true,
         },
         req.body.password,
-        function(err, res) {}
+        (err, res) => {
+          if (err) {
+            console.log(err);
+          }
+        },
       );
-      res.redirect("/admin");
+      res.redirect('/admin');
     } else {
       User.register(
         {
           username: req.body.newName,
           email: req.body.newEmail,
           tokens: req.body.newTokens,
-          admin: false
+          admin: false,
         },
         req.body.password,
-        function(err, res) {}
+        (err, res) => {},
       );
-      res.redirect("/admin");
+      res.redirect('/admin');
     }
   });
 
-app.route("/transaction/:id").get(function(req, res) {
+app.route('/transaction/:id').get((req, res) => {
   if (req.isAuthenticated()) {
-    TokenMovement.findOne({ _id: req.params.id }, function(err, transaction) {
+    TokenMovement.findOne({ _id: req.params.id }, (err, transaction) => {
       if (
         req.user.username === transaction.fromUsername ||
         req.user.username === transaction.toUsername
       ) {
-        res.render("transaction", {
+        res.render('transaction', {
           message: transaction.message,
-          colorTheme: colorTheme,
+          colorTheme,
           from: transaction.fromUsername,
           amount: transaction.amount,
           symbol: tokenSymbol,
           gravatarFrom: transaction.gravatarFrom,
-          gravatarTo: transaction.gravatarTo
+          gravatarTo: transaction.gravatarTo,
         });
       } else {
-        res.redirect("/");
+        res.redirect('/');
       }
     });
   } else {
-    res.redirect("/");
+    res.redirect('/');
   }
 });
 
-app.route("/admin/user-list").get(function(req, res) {
-  User.findOne({ admin: true, username: req.user.username }, function(
-    err,
-    founded
-  ) {
+app.route('/admin/user-list').get((req, res) => {
+  User.findOne({ admin: true, username: req.user.username }, (err, founded) => {
     if (req.isAuthenticated() && founded) {
-      User.find({}, function(err, users) {
-        res.render("admin-list", {
+      User.find({}, (err, users) => {
+        res.render('admin-list', {
           usersDB: users,
-          tokenSymbol: tokenSymbol,
-          nameOfYourToken: nameOfYourToken,
-          colorTheme: colorTheme
+          tokenSymbol,
+          nameOfYourToken,
+          colorTheme,
         });
       });
     } else {
@@ -446,6 +452,17 @@ app.route("/admin/user-list").get(function(req, res) {
   });
 });
 
-app.listen("3000", function() {
-  console.log("Server started at port 3000");
+// DEMO ONLY START
+
+app.get('/1', (req, res) => {
+  res.render('demo-1', { colorTheme });
+});
+app.get('/2', (req, res) => {
+  res.render('demo-2', { colorTheme });
+});
+
+// DEMO ONLY END
+
+app.listen('3000', () => {
+  console.log('Server started at port 3000');
 });

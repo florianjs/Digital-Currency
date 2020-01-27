@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <base href="/" />
+
+    <link rel="stylesheet" href="css/output.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <title>Transaction Hystory</title>
+
+    <script
+      src="https://kit.fontawesome.com/6b7ea7f5e7.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body class="bg-gray-200">
+    <%- include("partial/nav") %>
+
+    <div
+      class="card mx-6 flex flex-col mt-16 mb-8  max-w-2xl justify-around sm:mx-auto sm:flex-row  "
+    >
+      <div
+        class="profile-card p-4  flex-col bg-<%= colorTheme %>-700 rounded flex-1 shadow mr-2 "
+      >
+        <div class="profil-picture flex m-auto justify-center items-center">
+          <img
+            src="http://www.gravatar.com/avatar/63f22e9ed4ab5de271450af57df28c94?s=128"
+            alt=""
+            class="h-32 w-32 rounded-full  border-4 shadow-lg border-<%= colorTheme %>-600"
+          />
+        </div>
+
+        <h2 class="text-xl text-white text-center m-4 text-4xl">
+          From <span>Daryl</span>
+        </h2>
+        <h2
+          class="text-xl shadow bg-white mx-4 rounded p-2 text-<%= colorTheme %>-700 font-extrabold text-center text-4xl font-bold"
+        >
+          +1 TKN
+        </h2>
+
+        <h2 class="text-xl text-white text-3xl ml-4 mt-4">MESSAGE</h2>
+        <div
+          class="textarea p-2 bg-white m-4 p-2 rounded text-<%= colorTheme %>-700 text-lg shadow "
+        >
+          <p class="p-2">
+            Woof! 🐶
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions flex justify-center">
+      <a
+        href="/home"
+        class=" m-2 shadow py-2 px-8 text-2xl bg-<%= colorTheme %>-500 text-center rounded m-2 justify-center  text-white font-bold hover:bg-<%= colorTheme %>-600 lg:flex"
+      >
+        <i
+          class="fas fa-chevron-left text-white fa-sm  self-center mr-1 hover:mr-2 "
+        ></i
+        >BACK</a
+      >
+    </div>
+  </body>
+</html>

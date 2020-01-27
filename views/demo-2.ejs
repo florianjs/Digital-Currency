@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <base href="/" />
+
+    <link rel="stylesheet" href="css/output.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <title>Transaction Hystory</title>
+
+    <script
+      src="https://kit.fontawesome.com/6b7ea7f5e7.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body class="bg-gray-200">
+    <%- include("partial/nav") %>
+
+    <div
+      class="card mx-6 flex flex-col mt-16 mb-8  max-w-2xl justify-around sm:mx-auto sm:flex-row  "
+    >
+      <div
+        class="profile-card p-4  flex-col bg-<%= colorTheme %>-700 rounded flex-1 shadow mr-2 "
+      >
+        <div class="profil-picture flex m-auto justify-center items-center">
+          <img
+            src="http://www.gravatar.com/avatar/52af7ea41708106abb83a4127d092cb2?s=128"
+            alt=""
+            class="h-32 w-32 rounded-full  border-4 shadow-lg border-<%= colorTheme %>-600"
+          />
+        </div>
+
+        <h2 class="text-xl text-white text-center m-4 text-4xl">
+          From <span>Florian</span>
+        </h2>
+        <h2
+          class="text-xl shadow bg-white mx-4 rounded p-2 text-<%= colorTheme %>-700 font-extrabold text-center text-4xl font-bold"
+        >
+          +49 TKN
+        </h2>
+
+        <h2 class="text-xl text-white text-3xl ml-4 mt-4">MESSAGE</h2>
+        <div
+          class="textarea p-2 bg-white m-4 p-2 rounded text-<%= colorTheme %>-700 text-lg shadow "
+        >
+          <p class="p-2">
+            Ah! I see that you already meet my dog, Daryl. Ho, and he already
+            gives you 1 TKN ! Good boy ❤️❤️ As a welcome, here is another 49 TKN
+            for you 😃 <br />
+            But what exactly is Tonken?
+            <span class=" font-bold"
+              >Tonken is a Web App where you can create your very own Digital
+              Currency!</span
+            >
+            Sounds incredible, right? <br />
+            You can create a Digital Currency for your Online gaming team,
+            rewarding members for their skills ⚔️ <br />
+            or you can create it in your company and give your co-workers some
+            of your Digital Currency 🤝 <br />
+            or you can also create a Digital Currency to share the bill with
+            friends and family 👪 <br />
+            They are tons of other reasons to use Tonken. Just make it yours!
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions flex justify-center">
+      <a
+        href="/home"
+        class=" m-2 shadow py-2 px-8 text-2xl bg-<%= colorTheme %>-500 text-center rounded m-2 justify-center  text-white font-bold hover:bg-<%= colorTheme %>-600 lg:flex"
+      >
+        <i
+          class="fas fa-chevron-left text-white fa-sm  self-center mr-1 hover:mr-2 "
+        ></i
+        >BACK</a
+      >
+    </div>
+  </body>
+</html>
