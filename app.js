@@ -127,7 +127,6 @@ app
       successRedirect: '/home',
       failureRedirect: '/',
     }),
-    (req, res) => {},
   );
 
 app.get('/logout', (req, res) => {
@@ -388,7 +387,7 @@ app
           admin: true,
         },
         req.body.password,
-        (err, res) => {
+        (err) => {
           if (err) {
             console.log(err);
           }
@@ -404,7 +403,11 @@ app
           admin: false,
         },
         req.body.password,
-        (err, res) => {},
+        (err) => {
+          if (err) {
+            console.log(err);
+          }
+        },
       );
       res.redirect('/admin');
     }

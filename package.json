@@ -21,5 +21,9 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^6.0.1",
     "tailwindcss": "^1.1.4"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "prettier": "^1.19.1"
   }
 }
