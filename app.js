@@ -62,8 +62,8 @@ app.use(
   session({
     secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: false,
-  }),
+    saveUninitialized: false
+  })
 );
 app.use(passport.initialize());
 app.use(passport.session());
@@ -73,7 +73,7 @@ app.use(passport.session());
 
 mongoose.connect(urlDB + nameDB, {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: true
 });
 
 mongoose.set('useFindAndModify', false);
@@ -83,7 +83,7 @@ const userSchema = new mongoose.Schema({
   email: String,
   password: String,
   tokens: Number,
-  admin: Boolean,
+  admin: Boolean
 });
 
 const historySchema = new mongoose.Schema({
@@ -92,7 +92,7 @@ const historySchema = new mongoose.Schema({
   amount: Number,
   message: String,
   gravatarFrom: String,
-  gravatarTo: String,
+  gravatarTo: String
 });
 
 userSchema.plugin(passportLocalMongoose);
@@ -125,8 +125,8 @@ app
   .post(
     passport.authenticate('local', {
       successRedirect: '/home',
-      failureRedirect: '/',
-    }),
+      failureRedirect: '/'
+    })
   );
 
 app.get('/logout', (req, res) => {
@@ -143,8 +143,8 @@ app.route('/home').get((req, res) => {
         /* ignore jslint start */
         $or: [
           { fromUsername: req.user.username },
-          { toUsername: req.user.username },
-        ],
+          { toUsername: req.user.username }
+        ]
         /* ignore jslint end */
       },
       (err, founded) => {
@@ -158,9 +158,9 @@ app.route('/home').get((req, res) => {
           tokenName: nameOfYourToken,
           tokenSymbol,
           colorTheme,
-          pictureURL,
+          pictureURL
         });
-      },
+      }
     );
   } else {
     res.redirect('/');
@@ -182,7 +182,7 @@ app
         username: req.body.username,
         email: req.body.email,
         tokens: defaultTokens,
-        admin: false,
+        admin: false
       },
       req.body.password,
       (err) => {
@@ -193,7 +193,7 @@ app
             res.redirect('/home');
           });
         }
-      },
+      }
     );
   });
 
@@ -206,7 +206,7 @@ app
         amountError: '',
         tokenName: nameOfYourToken,
         tokenSymbol,
-        colorTheme,
+        colorTheme
       });
     } else {
       res.redirect('/');
@@ -230,7 +230,7 @@ app
               amountError: '',
               tokenName: nameOfYourToken,
               tokenSymbol,
-              colorTheme,
+              colorTheme
             });
           }
           if (founded) {
@@ -242,7 +242,7 @@ app
               amount: req.body.amount,
               message: req.body.message,
               gravatarFrom,
-              gravatarTo,
+              gravatarTo
             });
 
             User.findOneAndUpdate(
@@ -251,8 +251,8 @@ app
                 /* ignore jslint start */
                 $set: {
                   /* ignore jslint end */
-                  tokens: Number(req.user.tokens) - Number(req.body.amount),
-                },
+                  tokens: Number(req.user.tokens) - Number(req.body.amount)
+                }
               },
               (err, found) => {
                 if (err) {
@@ -262,7 +262,7 @@ app
                   history.save();
                   res.redirect('/home');
                 }
-              },
+              }
             );
           } else {
             res.render('send', {
@@ -270,10 +270,10 @@ app
               amountError: '',
               tokenName: nameOfYourToken,
               tokenSymbol,
-              colorTheme,
+              colorTheme
             });
           }
-        },
+        }
       );
     } else {
       res.render('send', {
@@ -281,7 +281,7 @@ app
         amountError: "You don't have enought tokens",
         tokenName: nameOfYourToken,
         tokenSymbol,
-        colorTheme,
+        colorTheme
       });
     }
   });
@@ -304,7 +304,7 @@ app.route('/admin').get((req, res) => {
           tokenSymbol,
           nameOfYourToken,
           colorTheme,
-          totTokens: 100,
+          totTokens: 100
         });
       });
     } else {
@@ -322,7 +322,7 @@ app
         if (founded) {
           res.render('edit-user', {
             username: editUsername,
-            colorTheme,
+            colorTheme
           });
         }
       });
@@ -349,14 +349,14 @@ app
           {
             $or: [
               { fromUsername: founded.username },
-              { toUsername: founded.username },
-            ],
+              { toUsername: founded.username }
+            ]
           },
           (err) => {
             if (err) {
               console.log(err);
             }
-          },
+          }
         );
         User.deleteOne({ username: founded.username }, (err) => {
           if (err) {
@@ -384,14 +384,14 @@ app
           username: req.body.newName,
           email: req.body.newEmail,
           tokens: req.body.newTokens,
-          admin: true,
+          admin: true
         },
         req.body.password,
         (err) => {
           if (err) {
             console.log(err);
           }
-        },
+        }
       );
       res.redirect('/admin');
     } else {
@@ -400,14 +400,14 @@ app
           username: req.body.newName,
           email: req.body.newEmail,
           tokens: req.body.newTokens,
-          admin: false,
+          admin: false
         },
         req.body.password,
         (err) => {
           if (err) {
             console.log(err);
           }
-        },
+        }
       );
       res.redirect('/admin');
     }
@@ -427,7 +427,7 @@ app.route('/transaction/:id').get((req, res) => {
           amount: transaction.amount,
           symbol: tokenSymbol,
           gravatarFrom: transaction.gravatarFrom,
-          gravatarTo: transaction.gravatarTo,
+          gravatarTo: transaction.gravatarTo
         });
       } else {
         res.redirect('/');
@@ -446,7 +446,7 @@ app.route('/admin/user-list').get((req, res) => {
           usersDB: users,
           tokenSymbol,
           nameOfYourToken,
-          colorTheme,
+          colorTheme
         });
       });
     } else {
