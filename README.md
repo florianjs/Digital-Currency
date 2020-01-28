@@ -1,6 +1,6 @@
 # PLEASE NOTE
 
-This version is an early version of the final Web App. 
+This is an early version of the final Web App. 
 
 ## Digital-Currency
 
