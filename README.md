@@ -1,3 +1,7 @@
+
+![Twitter Follow](https://img.shields.io/twitter/follow/icesofty?label=Follow&style=social)     ![GitHub stars](https://img.shields.io/github/stars/Icesofty/Digital-Currency?style=social)
+
+---
 # PLEASE NOTE
 
 This is an early version of the final Web App. 
