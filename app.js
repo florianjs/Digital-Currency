@@ -215,7 +215,8 @@ app
   .post((req, res) => {
     if (
       req.body.receiver !== req.user.username &&
-      req.body.amount <= req.user.tokens
+      req.body.amount <= req.user.tokens &&
+      Number(req.body.amount) > 0
     ) {
       User.findOneAndUpdate(
         { username: req.body.receiver },
