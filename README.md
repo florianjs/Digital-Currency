@@ -5,7 +5,7 @@
 # PLEASE NOTE
 
 This is an early version of the final Web App. 
-**DEMO WEBSITE :** http://64.227.62.141/
+**DEMO WEBSITE :** http://tonken.mooo.com/
 
 ## Digital-Currency
 
