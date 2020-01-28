@@ -9,13 +9,15 @@ Create your own private Self-Hosted Digital Currency. This Web App require Mongo
 # 1 - Clone the repo 
 
 ```
-git clone 
+git clone https://github.com/Icesofty/Digital-Currency.git
 ```
 
 # 2 - Install it 
 ```
 npm i 
 ```
+
+You need to create a .env file into the root folder and put SECRET=YOUR_SUPER_SECRET_PHRASE_HERE in it
 
 
 # 3 - Launch it 
