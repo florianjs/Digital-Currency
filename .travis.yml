@@ -1,0 +1,10 @@
+language: node_js
+
+sudo: false
+services:
+  - mongodb
+
+# whitelist
+branches:
+  only:
+    - master
