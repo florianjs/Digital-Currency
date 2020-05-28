@@ -36,6 +36,12 @@ const defaultTokens = 50;
 const nameOfYourToken = 'Tonken';
 const tokenSymbol = 'TKN';
 
+/* Decimal Value of Token */
+/* Default any until proper logic is added. To be fair to HTML5 and older browsers */
+/* Other options could be .01, .001, .00000001 etc */
+
+const tokenDecimal = 'any';
+
 /* Is your website open for public subscribers? */
 /* true = Yes */
 /* false = No, only admin can create accounts
@@ -206,6 +212,7 @@ app
         amountError: '',
         tokenName: nameOfYourToken,
         tokenSymbol,
+		tokenDecimal,
         colorTheme
       });
     } else {
