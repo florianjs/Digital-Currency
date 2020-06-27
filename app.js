@@ -216,7 +216,8 @@ app
     if (
       req.body.receiver !== req.user.username &&
       req.body.amount <= req.user.tokens &&
-      Number(req.body.amount) > 0
+      Number(req.body.amount) > 0 &&
+      Number.isInteger(req.body.amount)
     ) {
       User.findOneAndUpdate(
         { username: req.body.receiver },
