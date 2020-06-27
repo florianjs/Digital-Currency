@@ -1,13 +1,13 @@
-require('dotenv').config();
+require("dotenv").config();
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const session = require('express-session');
-const passport = require('passport');
-const passportLocalMongoose = require('passport-local-mongoose');
-const findOrCreate = require('mongoose-findorcreate');
-const gravatar = require('gravatar');
+const express = require("express");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const session = require("express-session");
+const passport = require("passport");
+const passportLocalMongoose = require("passport-local-mongoose");
+const findOrCreate = require("mongoose-findorcreate");
+const gravatar = require("gravatar");
 
 /* THEME COLOR  */
 /*  Available colors: */
@@ -20,7 +20,7 @@ blue
 indigo (DEFAULT)
 purple
 pink */
-const colorTheme = 'purple';
+const colorTheme = "indigo";
 
 /* DEFAULT AMOUNT OF TOKENS WHEN A USER REGISTER. */
 /* Recommended : 0
@@ -33,8 +33,8 @@ const defaultTokens = 50;
 /* Default name Tonken */
 /* Default symbol TKN */
 
-const nameOfYourToken = 'Tonken';
-const tokenSymbol = 'TKN';
+const nameOfYourToken = "Tonken";
+const tokenSymbol = "TKN";
 
 /* Is your website open for public subscribers? */
 /* true = Yes */
@@ -48,15 +48,15 @@ const publicRegister = true;
 /* default Database Name: tonkenDB */
 /* You can leave it as it. */
 
-const nameDB = 'tonkenDB';
-const urlDB = 'mongodb://localhost:27017/';
+const nameDB = "tonkenDB";
+const urlDB = "mongodb://localhost:27017/";
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
 
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 app.use(
   session({
@@ -76,7 +76,7 @@ mongoose.connect(urlDB + nameDB, {
   useUnifiedTopology: true
 });
 
-mongoose.set('useFindAndModify', false);
+mongoose.set("useFindAndModify", false);
 
 const userSchema = new mongoose.Schema({
   username: String,
@@ -97,8 +97,8 @@ const historySchema = new mongoose.Schema({
 
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
-const User = mongoose.model('User', userSchema);
-const TokenMovement = mongoose.model('TokenMovement', historySchema);
+const User = mongoose.model("User", userSchema);
+const TokenMovement = mongoose.model("TokenMovement", historySchema);
 
 passport.use(User.createStrategy());
 
@@ -113,30 +113,30 @@ passport.deserializeUser((id, done) => {
 });
 
 app
-  .route('/')
+  .route("/")
   .get((req, res) => {
     if (req.isAuthenticated()) {
-      res.redirect('/home');
+      res.redirect("/home");
     } else {
-      res.render('login', { register: publicRegister, colorTheme });
+      res.render("login", { register: publicRegister, colorTheme });
       res.end();
     }
   })
   .post(
-    passport.authenticate('local', {
-      successRedirect: '/home',
-      failureRedirect: '/'
+    passport.authenticate("local", {
+      successRedirect: "/home",
+      failureRedirect: "/"
     })
   );
 
-app.get('/logout', (req, res) => {
+app.get("/logout", (req, res) => {
   req.session.destroy();
   req.logout();
   req.session = null;
-  res.redirect('/');
+  res.redirect("/");
 });
 
-app.route('/home').get((req, res) => {
+app.route("/home").get((req, res) => {
   if (req.isAuthenticated()) {
     TokenMovement.find(
       {
@@ -150,7 +150,7 @@ app.route('/home').get((req, res) => {
       (err, founded) => {
         const pictureURL = gravatar.url(req.user.email, { s: 128 });
 
-        res.render('home', {
+        res.render("home", {
           tokens: req.user.tokens,
           username: req.user.username,
           history: founded,
@@ -163,17 +163,17 @@ app.route('/home').get((req, res) => {
       }
     );
   } else {
-    res.redirect('/');
+    res.redirect("/");
   }
 });
 
 app
-  .route('/subscribe')
+  .route("/subscribe")
   .get((req, res) => {
     if (publicRegister) {
-      res.render('subscribe', { colorTheme });
+      res.render("subscribe", { colorTheme });
     } else {
-      res.redirect('/');
+      res.redirect("/");
     }
   })
   .post((req, res) => {
@@ -187,10 +187,10 @@ app
       req.body.password,
       (err) => {
         if (err) {
-          res.redirect('/subscribe');
+          res.redirect("/subscribe");
         } else {
-          passport.authenticate('local')(req, res, () => {
-            res.redirect('/home');
+          passport.authenticate("local")(req, res, () => {
+            res.redirect("/home");
           });
         }
       }
@@ -198,18 +198,18 @@ app
   });
 
 app
-  .route('/send')
+  .route("/send")
   .get((req, res) => {
     if (req.isAuthenticated()) {
-      res.render('send', {
-        error: ' ',
-        amountError: '',
+      res.render("send", {
+        error: " ",
+        amountError: "",
         tokenName: nameOfYourToken,
         tokenSymbol,
         colorTheme
       });
     } else {
-      res.redirect('/');
+      res.redirect("/");
     }
   })
   .post((req, res) => {
@@ -226,9 +226,9 @@ app
 
         (err, founded) => {
           if (err) {
-            res.render('send', {
+            res.render("send", {
               error: "User doesn't exist",
-              amountError: '',
+              amountError: "",
               tokenName: nameOfYourToken,
               tokenSymbol,
               colorTheme
@@ -261,14 +261,14 @@ app
                 }
                 if (found) {
                   history.save();
-                  res.redirect('/home');
+                  res.redirect("/home");
                 }
               }
             );
           } else {
-            res.render('send', {
+            res.render("send", {
               error: "User doesn't exist",
-              amountError: '',
+              amountError: "",
               tokenName: nameOfYourToken,
               tokenSymbol,
               colorTheme
@@ -277,8 +277,8 @@ app
         }
       );
     } else {
-      res.render('send', {
-        error: '',
+      res.render("send", {
+        error: "",
         amountError: "You don't have enought tokens",
         tokenName: nameOfYourToken,
         tokenSymbol,
@@ -296,11 +296,11 @@ app
   }
 }); */
 
-app.route('/admin').get((req, res) => {
+app.route("/admin").get((req, res) => {
   User.findOne({ admin: true, username: req.user.username }, (err, founded) => {
     if (req.isAuthenticated() && founded) {
       User.find({}, (err, users) => {
-        res.render('admin', {
+        res.render("admin", {
           usersDB: users,
           tokenSymbol,
           nameOfYourToken,
@@ -315,20 +315,20 @@ app.route('/admin').get((req, res) => {
 });
 
 app
-  .route('/admin/edit/:user')
+  .route("/admin/edit/:user")
   .get((req, res) => {
     if (req.user.admin) {
       const editUsername = req.params.user;
       User.findOne({ username: editUsername }, (err, founded) => {
         if (founded) {
-          res.render('edit-user', {
+          res.render("edit-user", {
             username: editUsername,
             colorTheme
           });
         }
       });
     } else {
-      res.redirect('/');
+      res.redirect("/");
     }
   })
   .post((req, res) => {
@@ -345,7 +345,7 @@ app
         founded.tokens = req.body.newTokens;
         founded.save();
       }
-      if (req.body.delete === 'on') {
+      if (req.body.delete === "on") {
         TokenMovement.deleteMany(
           {
             $or: [
@@ -365,21 +365,21 @@ app
           }
         });
       }
-      res.redirect('/admin');
+      res.redirect("/admin");
     });
   });
 
 app
-  .route('/admin/new')
+  .route("/admin/new")
   .get((req, res) => {
     if (req.user.admin) {
-      res.render('create-user', { colorTheme });
+      res.render("create-user", { colorTheme });
     } else {
-      res.redirect('/');
+      res.redirect("/");
     }
   })
   .post((req, res) => {
-    if (req.body.isAdmin === 'on') {
+    if (req.body.isAdmin === "on") {
       User.register(
         {
           username: req.body.newName,
@@ -394,7 +394,7 @@ app
           }
         }
       );
-      res.redirect('/admin');
+      res.redirect("/admin");
     } else {
       User.register(
         {
@@ -410,18 +410,18 @@ app
           }
         }
       );
-      res.redirect('/admin');
+      res.redirect("/admin");
     }
   });
 
-app.route('/transaction/:id').get((req, res) => {
+app.route("/transaction/:id").get((req, res) => {
   if (req.isAuthenticated()) {
     TokenMovement.findOne({ _id: req.params.id }, (err, transaction) => {
       if (
         req.user.username === transaction.fromUsername ||
         req.user.username === transaction.toUsername
       ) {
-        res.render('transaction', {
+        res.render("transaction", {
           message: transaction.message,
           colorTheme,
           from: transaction.fromUsername,
@@ -431,19 +431,19 @@ app.route('/transaction/:id').get((req, res) => {
           gravatarTo: transaction.gravatarTo
         });
       } else {
-        res.redirect('/');
+        res.redirect("/");
       }
     });
   } else {
-    res.redirect('/');
+    res.redirect("/");
   }
 });
 
-app.route('/admin/user-list').get((req, res) => {
+app.route("/admin/user-list").get((req, res) => {
   User.findOne({ admin: true, username: req.user.username }, (err, founded) => {
     if (req.isAuthenticated() && founded) {
       User.find({}, (err, users) => {
-        res.render('admin-list', {
+        res.render("admin-list", {
           usersDB: users,
           tokenSymbol,
           nameOfYourToken,
@@ -458,15 +458,15 @@ app.route('/admin/user-list').get((req, res) => {
 
 // DEMO ONLY START
 
-app.get('/1', (req, res) => {
-  res.render('demo-1', { colorTheme });
+app.get("/1", (req, res) => {
+  res.render("demo-1", { colorTheme });
 });
-app.get('/2', (req, res) => {
-  res.render('demo-2', { colorTheme });
+app.get("/2", (req, res) => {
+  res.render("demo-2", { colorTheme });
 });
 
 // DEMO ONLY END
 
-app.listen('3000', () => {
-  console.log('Server started at port 3000');
+app.listen("3000", () => {
+  console.log("Server started at port 3000");
 });
