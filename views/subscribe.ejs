@@ -1,25 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <%- include("partial/header") %>
 
-    <link rel="stylesheet" href="css/output.css" />
-    <title>Tonken</title>
-
-    <script type="text/javascript">
-      function blockSpecialChar(e) {
-        var k = e.keyCode;
-        return (
-          (k > 64 && k < 91) ||
-          (k > 96 && k < 123) ||
-          k == 8 ||
-          (k >= 48 && k <= 57)
-        );
-      }
-    </script>
-  </head>
   <body class="bg-gray-200">
     <div class="flex flex-col justify-center items-center h-screen">
       <form
@@ -63,5 +45,16 @@
         </button>
       </form>
     </div>
+    <script type="text/javascript">
+      function blockSpecialChar(e) {
+        var k = e.keyCode;
+        return (
+          (k > 64 && k < 91) ||
+          (k > 96 && k < 123) ||
+          k == 8 ||
+          (k >= 48 && k <= 57)
+        );
+      }
+    </script>
   </body>
 </html>
