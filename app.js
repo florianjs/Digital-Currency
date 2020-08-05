@@ -241,7 +241,7 @@ app
             const history = new TokenMovement({
               fromUsername: req.user.username,
               toUsername: req.body.receiver,
-              amount: req.body.amount,
+              amount: Math.floor(req.body.amount),
               message: req.body.message,
               gravatarFrom,
               gravatarTo
@@ -253,7 +253,7 @@ app
                 /* ignore jslint start */
                 $set: {
                   /* ignore jslint end */
-                  tokens: Number(req.user.tokens) - Number(req.body.amount)
+                  tokens: Number(req.user.tokens) - Math.floor(req.body.amount)
                 }
               },
               (err, found) => {
