@@ -9,10 +9,10 @@
   "author": "Florian ARGAUD",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.1",
     "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "express-session": "^1.17.0",
     "gravatar": "^1.8.0",
     "mongoose": "^5.8.7",
